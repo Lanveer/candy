@@ -1,2 +1,1 @@
-# candy
-weixin small programms
+#CandyWine2
