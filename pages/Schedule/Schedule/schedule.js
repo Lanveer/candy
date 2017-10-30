@@ -3,6 +3,12 @@ var app = getApp();
 
 Page({
   data: {
+    identity: '',
+    tags: '',
+    openid: '',
+    codeFlag: true,
+    isGetCodeEnable: false,
+    timeleft: 60,
     //顶部滑动栏的数据， 热门 3月26日 3月27日 3月28日 那个地方的数据
     //对应日期的didSelected要赋值为true，其余为false
     topTabBarData: [
@@ -129,11 +135,8 @@ Page({
     toView: '1',
     scrollLeft: 0,
     needshowInfo: false,
-    isGetCodeEnable: true,
-    timeleft: 60,
     windowHeight: 0,
     todayItemId: '',
-    inputPhoneNumber: '',
     loadingHidden: true,
   },
   onLoad: function (options) {
@@ -149,19 +152,28 @@ Page({
         console.log("屏幕高度: " + res.windowHeight)
       }
     })
+    // 获取code信息
+    var codeInfo = wx.getStorageSync('codeInfo');
+    that.setData({
+      codeInfo: codeInfo
+    })
+
+    // 获取推广信息
+    var phone= options.phone
+    that.setData({
+      phone:phone
+    })
+
+
 
     that.showLoading();
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Agendaapi/getDate',
-      data: {
-
-      },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      url: app.globalData.host +'/v2/wechat.agenda/getDate',
+      method: 'GET',
       success: function (res) {
         // success
         console.log(res);
-        if (res.data.length == 0) {
+        if (res.data.data.length == 0) {
           wx.showModal({
             title: '暂时没有日期数据，小编正在努力中',
             content: '',
@@ -173,7 +185,7 @@ Page({
           })
         }
         that.setData({
-          topTabBarData: res.data
+          topTabBarData: res.data.data
         })
         for (var i = 0; i < that.data.topTabBarData.length; ++i) {
           var isMe = that.data.topTabBarData[i].didSelected;
@@ -187,17 +199,17 @@ Page({
         }
 
         wx.request({
-          url: 'https://min.jiushang.cn/index.php/index/Agendaapi/agendaList',
+          url: app.globalData.host + '/v2/wechat.agenda/index',
           data: {
-            cate: that.data.toView,
+            // cate: that.data.toView,
+            page_id:0,
             page: '1'
           },
-          method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-          // header: {}, // 设置请求的 header
+          method: 'GET', 
           success: function (res) {
             // success
             console.log(res);
-            if (res.data.length == 0) {
+            if (res.data.data.length == 0) {
               wx.showModal({
                 title: '暂时没有日程数据，小编正在努力中',
                 content: '',
@@ -209,7 +221,7 @@ Page({
               })
             }
             that.setData({
-              scheduleData: res.data
+              scheduleData: res.data.data.content
             })
             that.hideLoading();
           },
@@ -289,17 +301,16 @@ Page({
         currentPage += 1;
         that.showLoading()
         wx.request({
-          url: 'https://min.jiushang.cn/index.php/index/Agendaapi/agendaList',
+          url: app.globalData.host + '/v2/wechat.agenda/index',
           data: {
             cate: that.data.toView,
             page: currentPage,
             hot: '1'
           },
-          method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-          // header: {}, // 设置请求的 header
+          method: 'GET', 
           success: function (res) {
             // success
-            console.log(res);
+            console.log('wedwede:'+res);
             if (res.data.length < 20) {
               didReachEnd = true;
             } else {
@@ -342,26 +353,25 @@ Page({
         currentPage += 1;
         that.showLoading();
         wx.request({
-          url: 'https://min.jiushang.cn/index.php/index/Agendaapi/agendaList',
+          url: app.globalData.host + '/v2/wechat.agenda/index',
           data: {
-            cate: that.data.toView,
+            // cate: that.data.toView,
             page: currentPage
           },
-          method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-          // header: {}, // 设置请求的 header
+          method: 'GET',
           success: function (res) {
             // success
             console.log(res);
-            if (res.data.length < 20) {
+            if (res.data.data.length < 20) {
               didReachEnd = true;
             } else {
               didReachEnd = false;
             }
 
-            if (res.data.length > 0) {
+            if (res.data.data.length > 0) {
               var totalData = that.data.scheduleData
               that.setData({
-                scheduleData: totalData.concat(res.data)
+                scheduleData: totalData.concat(res.data.data)
               })
             }
             that.hideLoading()
@@ -438,17 +448,14 @@ Page({
     didReachEnd = false
     that.showLoading()
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Agendaapi/agendaList',
+      url: app.globalData.host + '/v2/wechat.agenda/index',
       data: {
-        cate: itemId,
-        page: '1'
+        page_id: that.data.toView
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      method: 'GET',
       success: function (res) {
-        // success
-        // if (res.data.length > 0) {
-        if (res.data.length == 0) {
+        console.log(res)
+        if (res.data.data.length == 0) {
           wx.showModal({
             title: '当前日程暂无数据，小编正在努力中',
             content: '',
@@ -458,12 +465,11 @@ Page({
               }
             }
           })
+        }else{
+          that.setData({
+            scheduleData: res.data.data.content
+          })
         }
-        that.setData({
-          scheduleData: res.data
-        })
-        // }
-        console.log(res);
         that.hideLoading();
       },
       fail: function () {
@@ -489,18 +495,8 @@ Page({
   cellItemClicked: function (event) {
     var that = this;
     var cellId = event.currentTarget.dataset.itemId;
-    console.log("cellId = " + cellId);
     wx.navigateTo({
-      url: '../DetailPage/detailPage?itemId=' + cellId,
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
+      url: '../DetailPage/detailPage?itemId=' + cellId
     })
   },
 
@@ -551,21 +547,24 @@ Page({
 
     that.showLoading()
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Agendaapi/agendaList',
+      url: app.globalData.host + '/v2/wechat.agenda/index',
       data: {
         cate: todayId,
         hot: '1',
-        page: '1'
+        page_id: '0'
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      method: 'GET', 
       success: function (res) {
-        // success
-        // if (res.data.length > 0) {
-        that.setData({
-          scheduleData: res.data
-        })
-        // }
+        if(res.data.code!=0){
+
+        }else{
+          console.log(res)
+          that.setData({
+            scheduleData: res.data.data.content
+          })
+        }
+  
+        // }topBarItemClicked
         that.hideLoading()
       },
       fail: function () {
@@ -595,48 +594,218 @@ Page({
       needshowInfo: false
     })
   },
+
+
   bindKeyInput: function (e) {
     var that = this;
     that.setData({
       inputPhoneNumber: e.detail.value
     })
   },
-
   // 获取验证码
   getCode: function (event) {
     var that = this;
-    send_code_countdown(that);
-    that.setData({
-      isGetCodeEnable: false
-    })
-    wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Userapi/sendMsg',
-      data: {
-        tel: that.data.inputPhoneNumber
-      },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      header: { "Content-Type": "application/x-www-form-urlencoded" }, // 设置请求的 header
-      success: function (res) {
-        // success 发送验证码成功
+    var tel = that.data.inputPhoneNumber;
+    if (tel != undefined || '') {
 
-      },
-      fail: function () {
-        // fail
-        wx.showModal({
-          title: '验证码发送失败，请重试',
-          content: '',
-          showCancel: false,
-          success: function (res) {
-            if (res.confirm) {
-            }
+      wx.request({
+        url: 'https://api.jiushang.cn/api/captcha/register',
+        data: {
+          phone: that.data.inputPhoneNumber
+        },
+        method: 'get',
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          'version': 2
+        },
+        success: function (res) {
+          // success 发送验证码成功
+          if (res.data.errCode != 0) {
+            wx.showModal({
+              title: res.data.msg,
+              content: '',
+              showCancel: false
+            })
+          } else {
+            send_code_countdown(that);
+            that.setData({
+              isGetCodeEnable: true,
+              codeFlag: false
+            })
+            wx.showModal({
+              title: '验证码发送成功',
+              content: '',
+              showCancel: false
+            })
           }
-        })
-      },
-      complete: function () {
-        // complete
-      }
+        },
+        fail: function () {
+          // fail
+          wx.showModal({
+            title: '验证码发送失败，请重试',
+            content: '',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) { }
+            }
+          })
+        },
+        complete: function () {
+          // complete
+        }
+      })
+    } else {
+      wx.showModal({
+        title: '电话号码为空',
+        content: '',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) { }
+        }
+      })
+    }
+
+  },
+
+
+// 添加的弹框信息处理开始
+
+
+  // 处理身份
+  checkboxChange: function (e) {
+    var that = this;
+    that.setData({
+      identity: e.detail.value
+    })
+
+  },
+
+  // 处理标签
+  tagsChange: function (e) {
+    var that = this;
+    that.setData({
+      tags: e.detail.value
     })
   },
+
+  // 处理悬浮框的数据提交
+  regist: function (e) {
+    var that = this;
+    if (e.detail.value.tel == '') {
+      wx.showModal({
+        title: '错误',
+        content: '电话号码不能为空！',
+        showCancel: false,
+      })
+      return false
+    }
+    if (e.detail.value.password == '') {
+      wx.showModal({
+        title: '错误',
+        content: '密码不能为空！',
+        showCancel: false,
+      })
+      return false
+    }
+    if (e.detail.value.email == '') {
+      wx.showModal({
+        title: '错误',
+        content: '邮箱不能为空！',
+        showCancel: false,
+      })
+      return false
+    }
+    if (e.detail.value.code == '') {
+      wx.showModal({
+        title: '错误',
+        content: '验证码不能为空！',
+        showCancel: false,
+      })
+      return false
+    }
+    if (that.data.identity.length == 0) {
+      wx.showModal({
+        title: '错误',
+        content: '请选择身份',
+        showCancel: false,
+      })
+      return false
+    }
+    if (that.data.tags.length == 0) {
+      wx.showModal({
+        title: '错误',
+        content: '请至少选择一个标签',
+        showCancel: false,
+      })
+      return false
+    }
+
+    var params = {
+      nick_name: app.globalData.nick_name,
+      tel: e.detail.value.tel,
+      password: e.detail.value.password,
+      opencode: that.data.codeInfo,
+      header: app.globalData.header,
+      code: e.detail.value.code,
+      email: e.detail.value.email,
+      identity: that.data.identity.join(),
+      tags: that.data.tags,
+      customer_number: e.detail.value.customer_number,
+      qrcode:that.data.phone
+    }
+    wx.request({
+      url: app.globalData.host + 'v2/wechat.sign/up',
+      method: 'POST',
+      header: { "Content-Type": "application/x-www-form-urlencoded" },
+      data: params,
+      success: function (res) {
+        console.log(res)
+        if (res.data.code != 0) {
+          wx.showModal({
+            title: '注册失败',
+            content: res.data.msg,
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) { }
+            }
+          })
+        } else {
+          wx.showModal({
+            title: '注册成功',
+            content: '',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                wx.navigateBack(1);
+                app.globalData.didFillinInfo = true;
+                wx.setStorage({
+                  key: 'didFillinInfo',
+                  data: true,
+                })
+              }
+            }
+          })
+        }
+      },
+      error: function (err) { }
+    })
+  },
+
+
+
+// 添加的弹窗信息处理结束
+
+
+
+
+
+
+
+
+
+
+
+
 
   formSubmit: function (e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
@@ -878,7 +1047,6 @@ function count_down(that) {
       that.setData({
         needshowInfo: true
       })
-    console.log('10s');
     clearTimeout(timer);
   }
 
@@ -886,8 +1054,7 @@ function count_down(that) {
     // 放在最后--
     total_micro_second -= 10;
     count_down(that);
-  }
-    , 10)
+  }, 2)
 }
 
 // 时间格式化输出，如03:25:19 86。每10ms都会调用一次

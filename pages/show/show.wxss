@@ -94,15 +94,16 @@
 }
 
 .banner-info {
-  width: 80%;
+  width: 100%;
   height: 100rpx;
   position: absolute;
   bottom: 12rpx;
   left: 20rpx;
+   /* background: red;  */
 }
 
 .hotel-name {
-  font-feature-settings: 30rpx;
+font-size: 10pt;
   color: #fff;
 }
 
@@ -152,15 +153,19 @@
 }
 
 .dis-tag {
-  width: 145rpx;
+  width: 245rpx;
   height: 40rpx;
   font-size: 22rpx;
   color: #fff;
-  background: #4faeff;
+  /* background: #4faeff; */
   line-height: 40rpx;
   text-align: center;
   margin-right: 20rpx;
   border-radius: 4px;
+  position: absolute;
+  right: 1rpx;
+  bottom: 1rpx;
+
 }
 
 .info-down {
@@ -172,8 +177,23 @@
 }
 
 .info-down>text {
-  font-size: 28rpx;
-  color: #282828;
+  font-size: 24rpx;
+  color: #666666;
+  margin: auto;
+  line-height: 100%;
+}
+
+.info-down-up {
+  width: 95%;
+  height: auto;
+  margin: auto;
+  /*padding-left: 20rpx;*/
+  /* margin-bottom: 10rpx; */
+}
+
+.info-down-up>text {
+  font-size: 24rpx;
+  color: #333333;
   margin: auto;
 }
 
@@ -190,7 +210,7 @@
 
 .scroll {
   height: 64rpx;
-  background: #f2f2f2;
+  /* background: #f2f2f2; */
   white-space: nowrap;
   display: flex;
   flex-direction: row;
@@ -210,14 +230,45 @@
 .separatorLine {
     width: 76rpx;
     height: 4rpx;
-    background: #F1F1F1;
+    /* background: #F1F1F1; */
+    /*margin-top: 8rpx;*/
+}
+
+.floortext {
+    font-size: 28rpx;
+    color: #999999;
+}
+
+.floortextSelected {
+    /* font-size: 28rpx; */
+    color: #FF6029;
+}
+
+.separatorLine10 {
+    width: 750rpxrpx;
+    height: 20rpx;
+     background: #EAF0F4; 
+    /*margin-top: 8rpx;*/
+}
+
+.separatorLine1 {
+    width: 750rpxrpx;
+    height: 2rpx;
+     background: #E8E8E8; 
+    /*margin-top: 8rpx;*/
+}
+
+.separatorLineMid {
+    width: 730rpxrpx;
+    height: 2rpx;
+     background: #E8E8E8; 
     /*margin-top: 8rpx;*/
 }
 
 .separatorLineSelected {
     width: 76rpx;
     height: 4rpx;
-    background: #E82929;
+    background: #FF6029;
     /*margin-top: 8rpx;*/
 }
 

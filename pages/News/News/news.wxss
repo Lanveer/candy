@@ -1,5 +1,5 @@
 /* pages/News/News/news.wxss */
-
+@import "../../template_regist/regist.wxss";
 .container {
     width: 750rpx;
     height: auto;
@@ -17,6 +17,9 @@
   top: -1rpx;
   z-index: 2;
 }
+::-webkit-scrollbar{
+  display: none;
+}
 
 .topBarItem {
   width: 475rpx;
@@ -28,7 +31,7 @@
 }
 
 .topBarTitle {
-  font-size: 30rpx;
+  font-size: 28rpx;
   color: #666666;
   margin: auto;
   text-align: center;
@@ -36,20 +39,20 @@
 }
 
 .topBarTitleSelected {
-  font-size: 30rpx;
-  color: #E82929;
+  font-size: 28rpx;
+  color: #FF6029;
 }
 
 .topBarItemLine {
   background: #F1F1F1;
   height: 5rpx;
-  width: 162rpx;
+  width: 48rpx;
 }
 
 .topBarItemLineSelected {
-  background: #E82929;
+  background: #FF6029;
   height: 5rpx;
-  width: 162rpx;
+  width: 48rpx;
 }
 
 /*轮播图*/
@@ -117,8 +120,9 @@
   width: 100rpx;
   height: 40rpx;
   border-radius: 5rpx;
-  border-color: #C31421;
-  border: 1rpx solid #C31421;
+  border-color: #FFCD4D;
+  border: 1rpx solid #FFCD4D;
+  background: #FFCD4D;
   position: absolute;
   right: 0rpx;
   bottom: 0rpx;
@@ -129,7 +133,7 @@
 
 .topNewsIconFont {
   font-size: 24rpx;
-  color: #C31421;
+  color: #FFFFFF;
   line-height: 40rpx;
 }
 
@@ -154,6 +158,7 @@
 .normalNewsImage {
   width: 210rpx;
   height: 160rpx;
+  background: #ccc;
 }
 
 .normalNewsTitleView {
@@ -218,6 +223,7 @@
   font-size: 34rpx;
   color: #353535;
   line-height: 76rpx;
+  padding-bottom: 10rpx;
 }
 
 .imagesNewsImageView {
@@ -229,8 +235,9 @@
 }
 
 .imagesNewsImage {
-  width: 230rpx;
+  width: 220rpx;
   height: 176rpx;
+  margin-right: 5rpx;
 }
 
 .imagesNewsIconView {
@@ -250,42 +257,39 @@
 /*视频资讯*/
 .videoNewsView {
   width: 750rpx;
-  height: 364rpx;
+  height: 400rpx;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
+  overflow: hidden;
 }
 
 .videoNewsContainer {
-  width: 750rpx;
+  width: 710rpx;
   height: 320rpx;
   position: relative;
-  margin-top: 20rpx;
+  margin: 20rpx auto 0;
 }
 
 .videoNewsTitleView {
   width: auto;
   height: auto;
   display: flex;
-  position: absolute;
+  /* position: absolute; */
   flex-direction: row;
   align-items: center;
 }
 
 .videoNewsTitleFont {
   font-size: 34rpx;
-  color: #FFFFFF;
-  position: absolute;
-  left: 20rpx;
-  top: 20rpx;
+  color: #000;
+  margin-left: 10pt;
+  margin-top: 10rpx;
 }
 
 .videoNewsImage {
-  width: 750rpx;
-  height: 320rpx;
-  position: absolute;
-  left: 0rpx;
-  top: 0rpx;
+  width:100%;
+  height: 360rpx;
   z-index: 0;
 }
 

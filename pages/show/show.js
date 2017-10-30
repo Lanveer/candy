@@ -1,6 +1,6 @@
 // pages/show/show.js
 var app = getApp();
-
+//var templateClicked = require("../template/template.js");
 Page({
   data: {
 
@@ -164,24 +164,24 @@ Page({
 
     floorExhibitionData: [
       {
-        id: '',
-        company: '',
-        typeStr: '',
-        hotel: '',
-        contact: '',
-        tel: '',
-        exhibition_code: '',
-        floor: '',
-        imageUrl: '',
+        id: '1',
+        company: '1',
+        typeStr: '1',
+        hotel: 'hjwefew',
+        contact: 'zhasna ',
+        tel: '4354353',
+        exhibition_code: 'ee',
+        floor: '4',
+        imageUrl: 'ere',
         tag: [
           {
-            title: ''
+            title: 'erfref'
           },
           {
-            title: ''
+            title: 'wefrewf'
           },
           {
-            title: ''
+            title: 'were'
           },
         ],
       }
@@ -191,7 +191,7 @@ Page({
     itemId: '',
     // 酒店信息
     name: '',
-    introduce: '',
+    introduce: 'introduce',
     logo: '',
     address: '',
     lat: '',
@@ -310,33 +310,71 @@ Page({
 
   },
 
+  // 点击地址
+  smallLocationClicked: function (event) {
+    var that = this;
+    // var index = event.currentTarget.dataset.index;
+    var lat = parseFloat(event.currentTarget.dataset.lat);
+    var lng = parseFloat(event.currentTarget.dataset.lng);
+    var name = event.currentTarget.dataset.name;
+    var location = event.currentTarget.dataset.location;
+    wx.openLocation({
+      latitude: lat, // 纬度，范围为-90~90，负数表示南纬
+      longitude: lng, // 经度，范围为-180~180，负数表示西经
+      scale: 28, // 缩放比例
+      name: name, // 位置名
+      address: location, // 地址的详细说明
+      success: function (res) {
+        // success
+        console.log("success...")
+      },
+      fail: function () {
+        // fail
+        console.log("fail...")
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  },
+
+  list_clicked: function (event) {
+    // 用户行为统计
+    var name = event.currentTarget.dataset.name;
+    app.userAct('展位', name)
+
+    wx.navigateTo({
+      url: '../exhibitionPos/exhibitionPos?itemId=' + event.currentTarget.dataset.index,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
+
   loadMoreData: function (event) {
     var that = this;
     if (!didReachEnd) {
       currentPage += 1;
       that.showLoading()
       wx.request({
-        url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/exhibitionHotelBoothList',
+        url: app.globalData.host +'v2/wechat.booth/index',
         data: {
-          id: that.data.itemId,
+          eh_id: that.data.itemId,
           floor: currentFloor,
           page: currentPage
         },
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
+        method: 'GET',
         success: function (res) {
-          // success
-          console.log(res);
-          if (res.data.length < 20) {
+          if (res.data.data.length < 20) {
             didReachEnd = true;
           } else {
             didReachEnd = false;
           }
 
-          if (res.data.length > 0) {
+          if (res.data.data.length > 0) {
             var totalData = that.data.floorExhibitionData
             that.setData({
-              floorExhibitionData: totalData.concat(res.data)
+              floorExhibitionData: totalData.concat(res.data.data.content)
             })
           }
           that.hideLoading()
@@ -371,9 +409,9 @@ Page({
     didReachEnd = false;
     that.showLoading()
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/exhibitionHotelBoothList',
+      url: app.globalData.host + 'v2/wechat.booth/index',
       data: {
-        id: that.data.itemId,
+        eh_id: that.data.itemId,
         floor: currentFloor,
         page: currentPage
       },
@@ -381,20 +419,34 @@ Page({
       // header: {}, // 设置请求的 header
       success: function (res) {
         // success
-        console.log(res);
         // if (res.data.length > 0) {
-        that.setData({
-          floorExhibitionData: res.data
-        })
-
+        if (res.data.data.length == 0) {
+          wx.showModal({
+            title: '暂时没有展位数据，小编正在努力中',
+            content: '',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              }
+            }
+          })
+          that.setData({
+            floorExhibitionData: ""
+          })
+        } else {
+          that.setData({
+            floorExhibitionData: res.data.data.content
+          })
+          console.log(that.data.floorExhibitionData);
+        }
         // }
-        that.hideLoading()
+
       },
       fail: function () {
         // fail
         that.hideLoading()
         wx.showModal({
-          title: '加载酒店信息失败，请重试',
+          title: '加载展位信息失败，请重试',
           content: '',
           showCancel: false,
           success: function (res) {
@@ -408,69 +460,37 @@ Page({
         that.hideLoading()
       }
     })
-
   },
 
   loadData: function () {
     var that = this;
     that.showLoading()
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/exhibitionHotelInfo',
+      url: app.globalData.host + 'exhibitionHotel/' + that.data.itemId,
       data: {
         lat: app.globalData.latitude,
         lng: app.globalData.longitude,
-        id: that.data.itemId
+        booth_count: 1,
+        back_distance: 1,
+        format_floors: 1
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      method: 'GET', 
       success: function (res) {
         // success
+        var tempFloor = res.data.data.format_floors;
         that.setData({
-          name: res.data.name,
-          introduce: res.data.introduce,
-          logo: res.data.logo,
-          address: res.data.address,
-          lat: res.data.lat,
-          lng: res.data.lng,
-          boothnum: res.data.boothnum,
-          distance: res.data.distance,
-          hotelType: res.data.type
+          name: res.data.data.name,
+          introduce: res.data.data.introduce,
+          logo: res.data.data.logo,
+          banner:res.data.data.banner,
+          address: res.data.data.address,
+          lat: res.data.data.lat,
+          lng: res.data.data.lng,
+          boothnum: res.data.data.booth_count,
+          distance: res.data.data.distance,
+          floor: tempFloor
+        })
 
-        })
-        wx.request({
-          url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/getFloor',
-          data: {
-            cate: that.data.hotelType
-          },
-          method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-          // header: {}, // 设置请求的 header
-          success: function (res) {
-            // success
-            // if(res.data.length > 0) {
-            that.setData({
-              floor: res.data
-            })
-            if (res.data.length == 0) {
-              wx.showModal({
-                title: '暂时没有楼层数据，小编正在努力中',
-                content: '',
-                showCancel: false,
-                success: function (res) {
-                  if (res.confirm) {
-                  }
-                }
-              })
-            }
-            // }
-          },
-          fail: function () {
-            // fail
-            console.log("errrrrrrrrr")
-          },
-          complete: function () {
-            // complete
-          }
-        })
 
       },
       fail: function () {
@@ -498,23 +518,16 @@ Page({
     currentFloor = 1;
 
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/exhibitionHotelBoothList',
+      url: app.globalData.host + 'v2/wechat.booth/index',
       data: {
-        id: that.data.itemId,
+        eh_id: that.data.itemId,
         floor: 1,
         page: 1
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      method: 'GET',
       success: function (res) {
-        // success
-        console.log(res);
-        // if (res.data.length > 0) {
-        that.setData({
-          floorExhibitionData: res.data
-        })
-        // }
-        if (res.data.length == 0) {
+        console.log(res)
+        if (res.data.data.length == 0) {
           wx.showModal({
             title: '暂时没有展位数据，小编正在努力中',
             content: '',
@@ -523,6 +536,13 @@ Page({
               if (res.confirm) {
               }
             }
+          })
+          that.setData({
+            floorExhibitionData: ""
+          })
+        } else {
+          that.setData({
+            floorExhibitionData: res.data.data.content
           })
         }
       },
@@ -573,8 +593,8 @@ Page({
       data: {
         tel: that.data.inputPhoneNumber
       },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      header: { "Content-Type": "application/x-www-form-urlencoded" }, // 设置请求的 header
+      method: 'POST',
+      header: { "Content-Type": "application/x-www-form-urlencoded" }, 
       success: function (res) {
         // success 发送验证码成功
 
@@ -714,7 +734,7 @@ Page({
       header: { "Content-Type": "application/x-www-form-urlencoded" }, // 设置请求的 header
       success: function (res) {
         // success
-        console.log(res);
+        // console.log(res);
         if (res.statusCode == 200) {
           app.globalData.didFillinInfo = true;
           wx.setStorage({

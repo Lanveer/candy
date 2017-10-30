@@ -1,0 +1,84 @@
+/* pages/extCollect/extCollect.wxss */
+.tp{
+  font-size: 12pt;
+  color: #333;
+  text-align: center;
+  padding: 20px;
+}
+.box{
+   width: 100%;
+   height: auto;
+   overflow: hidden;
+   border-top: 1rpx solid #ddd;
+}
+.box:last-child{
+  border-top: none
+}
+.header{
+   height: 85rpx;
+   border-bottom: 1rpx solid #ddd;
+   display: flex;
+   flex-direction: row;align-items: center;
+   vertical-align: middle;
+}
+.header>view:first-child{
+  margin-left: 10pt;
+  font-size: 11pt;color: #333;
+}
+.header>view:last-child{
+  margin-left: 10pt;
+  width: auto;
+  padding: 1pt 3pt 1pt 3pt;
+  background: #ff5f27;
+  color: #fff;
+  font-size: 9pt;
+  border-radius: 1.5pt;
+}
+
+.body{
+  height: 230rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+  width: 93%;
+  margin: auto;
+  border-bottom:  1rpx solid #ddd;
+  
+}
+
+.left{
+  width: 158rpx;height: 158rpx;
+  background: #ccc;
+}
+.left>image{
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.right{
+  margin-left: 10pt;
+ display: flex;flex-direction: column;
+ align-items: left;vertical-align: middle;
+}
+
+.right>text{
+   font-size: 9pt;
+   color: #999999;
+}
+
+.tags{
+   display: flex;flex-direction: row;
+ align-items: center;vertical-align: middle;
+}
+.tag{
+   font-size: 9pt;
+   width: auto;
+   padding: 1pt 3pt 1pt 3pt;
+   background: #ffcd4d;
+   color: #fff;
+   border-radius: 1.5pt;
+   margin-right: 5pt;
+   margin-top: 2pt;
+}

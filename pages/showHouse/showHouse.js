@@ -272,139 +272,125 @@ Page({
     var that = this;
     that.showLoading()
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/exhibitionHotelInfo',
-      data: {
-        lat: app.globalData.latitude,
-        lng: app.globalData.longitude,
-        id: that.data.itemId
-      },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function (res) {
-        // success
-        that.setData({
-          name: res.data.name,
-          introduce: res.data.introduce,
-          logo: res.data.logo,
-          address: res.data.address,
-          lat: res.data.lat,
-          lng: res.data.lng,
-          boothnum: res.data.boothnum,
-          distance: res.data.distance,
-          exhibitionType: res.data.type
-
-        })
-        wx.request({
-          url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/getFloor',
-          data: {
-            cate: that.data.exhibitionType
-          },
-          method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-          // header: {}, // 设置请求的 header
-          success: function (res) {
+        // url: 'http://tjh.xtype.cn/exhibitionHotel/'+that.data.itemId ,
+        url: app.globalData.host +'v2/wechat.exhibition_hotel/read',
+        data: {
+            lat: app.globalData.latitude,
+            lng: app.globalData.longitude,
+            booth_count: 1,
+            back_distance: 1,
+            format_floors: 1,
+            id: that.data.itemId
+        },
+        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+        // header: {}, // 设置请求的 header
+        success: function (res) {
             // success
+            console.log(res)
+            var tempFloor = res.data.data.format_floors;
+            // for (var i = 0; i < tempFloor.length; ++i) {
+            //     var str1 = tempFloor[i] + '层';
+            //     var key1 = 'floor[' + i + '].detail';
+            //     var str2 = false;
+            //     var key2 = 'floor[' + i + '].didSelected';
+            //     var str3 = tempFloor[i]
+            //     var key3 = 'floor[' + i + '].id';
+            //     var obj = {};
+
+            //     obj[key1] = str1;
+            //     obj[key2] = str2;
+            //     obj[key3] = str3;
+            //     that.setData(obj);
+
+            // }
+
             that.setData({
-              floor: res.data,
+                name: res.data.data.name,
+                introduce: res.data.data.introduce,
+                logo: res.data.data.logo,
+                address: res.data.data.address,
+                lat: res.data.data.lat,
+                lng: res.data.data.lng,
+                boothnum: res.data.data.booth_count,
+                distance: res.data.data.distance,
+                floor: tempFloor
+
             })
-            if (res.data.length > 0) {
-              that.setData({
-                exhibitionTag: res.data[0].tag
-              })
-            } else {
-              if (res.data.length == 0) {
-                wx.showModal({
-                  title: '暂时没有展馆数据，小编正在努力中',
-                  content: '',
-                  showCancel: false,
-                  success: function (res) {
+
+
+        },
+        fail: function () {
+            // fail
+            that.hideLoading()
+            wx.showModal({
+                title: '加载酒店信息失败，请重试',
+                content: '',
+                showCancel: false,
+                success: function (res) {
                     if (res.confirm) {
                     }
-                  }
-                })
-              }
-            }
-          },
-          fail: function () {
-            // fail
-            console.log('error....')
-          },
-          complete: function () {
+                }
+            })
+
+        },
+        complete: function () {
             // complete
-          }
-        })
-      },
-      fail: function () {
-        // fail
-        that.hideLoading()
-        wx.showModal({
-          title: '加载酒店信息失败，请重试',
-          content: '',
-          showCancel: false,
-          success: function (res) {
-            if (res.confirm) {
-            }
-          }
-        })
-
-      },
-      complete: function () {
-        // complete
-        // that.hideLoading()
-      }
+            // that.hideLoading()
+        }
     })
-
-
 
     currentPage = 1;
     didReachEnd = false;
     currentFloor = 1;
 
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/exhibitionHotelBoothList',
-      data: {
-        id: that.data.itemId,
-        floor: 1,
-        page: 1
-      },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function (res) {
-        // success
-        console.log(res);
-        // if (res.data.length > 0) {
-        that.setData({
-          floorExhibitionData: res.data
-        })
-        if (res.data.length == 0) {
-          wx.showModal({
-            title: '暂时没有展位数据，小编正在努力中',
-            content: '',
-            showCancel: false,
-            success: function (res) {
-              if (res.confirm) {
-              }
+        // url: 'http://tjh.xtype.cn/booth',
+        url: app.globalData.host +'v2/wechat.booth/index',
+        data: {
+            eh_id: that.data.itemId,
+            floor: 1,
+            page: 1
+        },
+        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+        // header: {}, // 设置请求的 header
+        success: function (res) {
+            // success
+            if (res.data.data.length == 0) {
+                wx.showModal({
+                    title: '暂时没有展位数据，小编正在努力中',
+                    content: '',
+                    showCancel: false,
+                    success: function (res) {
+                        if (res.confirm) {
+                        }
+                    }
+                })
+                that.setData({
+                    list_data: ""
+                })
+            } else {
+                that.setData({
+                    list_data: res.data.data.content
+                })
             }
-          })
+        },
+        fail: function () {
+            // fail
+            that.hideLoading()
+            wx.showModal({
+                title: '加载展位信息失败，请重试',
+                content: '',
+                showCancel: false,
+                success: function (res) {
+                    if (res.confirm) {
+                    }
+                }
+            })
+        },
+        complete: function () {
+            // complete
+            that.hideLoading()
         }
-        // }
-      },
-      fail: function () {
-        // fail
-        that.hideLoading()
-        wx.showModal({
-          title: '加载展位信息失败，请重试',
-          content: '',
-          showCancel: false,
-          success: function (res) {
-            if (res.confirm) {
-            }
-          }
-        })
-      },
-      complete: function () {
-        // complete
-        that.hideLoading()
-      }
     })
   },
 
@@ -427,7 +413,7 @@ Page({
         console.log(res);
         // if (res.data.length > 0) {
         that.setData({
-          floorExhibitionData: res.data
+            list_data: res.data
         })
 
         // }
@@ -478,9 +464,9 @@ Page({
           }
 
           if (res.data.length > 0) {
-            var totalData = that.data.floorExhibitionData
+              var totalData = that.data.list_data
             that.setData({
-              floorExhibitionData: totalData.concat(res.data)
+                list_data: totalData.concat(res.data)
             })
           }
           that.hideLoading()

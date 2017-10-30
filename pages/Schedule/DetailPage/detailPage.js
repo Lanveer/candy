@@ -82,21 +82,21 @@ Page({
     count_down(that);
     that.showLoading()
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Agendaapi/agendaInfo',
+      url: app.globalData.host + 'v2/wechat.agenda/read',
       data: {
-        itemId: newsId
+        id: newsId
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      method: 'GET',
       success: function (res) {
-        // success
+        if (res.data.code != 0) {
 
-        that.setData({
-          infoimg: res.data.infoimg,
-          introduce: res.data.introduce,
-          title:res.data.title
-        })
-        console.log(that.data.contentData)
+        } else {
+          console.log(res)
+          that.setData({
+            agendaDetail: res.data.data
+          })
+        }
+
         that.hideLoading()
       },
       fail: function () {
@@ -157,7 +157,7 @@ Page({
       loadingHidden: true
     })
   },
-formSubmit: function (e) {
+  formSubmit: function (e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
 
     var userId = wx.getStorageSync('userId');

@@ -1,0 +1,41 @@
+<!--pages/product/product.wxml-->
+<view class="container">
+    <view class="banner">
+        <swiper indicator-dots="true" autoplay="true">
+            <block wx:for="{{banner}}">
+                <swiper-item>
+                    <image src="{{item.path}}"></image>
+                </swiper-item>
+            </block>
+        </swiper>
+        <text class="bannerTitle"></text>
+    </view>
+    <view class="separatorView"></view>
+
+    <!--产品参数  -->
+    <view class="hotelFrontTitleContainer">
+        <view class="hotelFrontTitleView">
+            <view class="hotelFrontTitleLineLeft"></view>
+            <text class="hotelFrontTitleText">产品参数</text>
+            <view class="hotelFrontTitleLine"></view>
+        </view>
+    </view>
+    <view class="productInfoView">
+        <view class="separatorLine"></view>
+        <view class="prodInfoTextView">
+            <text class="infoName"></text>
+            <text class="infoContent"></text>
+        </view>
+    </view>
+
+    <view class="separatorView"></view>
+
+    <!--产品详情  -->
+    <view class="hotelFrontTitleContainer">
+        <view class="hotelFrontTitleView">
+            <view class="hotelFrontTitleLineLeft"></view>
+            <text class="hotelFrontTitleText">产品详情</text>
+            <view class="hotelFrontTitleLine"></view>
+        </view>
+    </view>
+</view>

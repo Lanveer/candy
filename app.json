@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/Exhibition/Exhibition/exhibition",
+    "pages/showHouse/showHouse",
+    "pages/exhibitionPos/exhibitionPos",
+    "pages/Detail/detail",
     "pages/Schedule/Schedule/schedule",
     "pages/Schedule/DetailPage/detailPage",
     "pages/News/News/news",
@@ -8,53 +11,64 @@
     "pages/News/Details/mutipleImagesDetail/detail",
     "pages/News/Details/bigImageDetail/detail",
     "pages/News/Details/videoDetail/detail",
-    "pages/Mine/Mine/mine",
-    "pages/template/template",
+    "pages/News/Details/SecondVerDetail/detail",
+    "pages/extCollect/extCollect",
     "pages/show/show",
-    "pages/showHouse/showHouse",
+    "pages/search/search",
     "pages/list/list",
+    "pages/Mine/Mine/mine",
     "pages/Mine/feedback/feedback",
     "pages/Mine/info/info",
     "pages/Mine/msg/msg",
-    "pages/search/search",
+    "pages/Mine/qualifyUpload/qualifyUpload",
+    "pages/Mine/zhanweiUpload/zhanweiUpload",
+    "pages/Mine/regist/regist",
+    "pages/Mine/qualify/qualify",
+    "pages/Mine/productUpload/productUpload",
+    "pages/Mine/zhanweiList/zhanweiList",
+    "pages/Mine/zhanweiDetail/zhanweiDetail",
     "pages/index/index",
+    "pages/product/product",
     "pages/logs/logs"
   ],
-  
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#EC3E3E",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "酒商",
-    "navigationBarTextStyle": "red"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#353535",
-    "selectedColor": "#E82929",
+    "color": "#999999",
+    "selectedColor": "#FF6029",
     "borderStyle": "white",
     "backgroundColor": "#F9F9F9",
     "list": [
       {
         "pagePath": "pages/Exhibition/Exhibition/exhibition",
-        "iconPath": "images/tab_city.png",
-        "selectedIconPath": "images/tab_city_s.png",
+        "iconPath": "images/booth_icon_exhibition_gray.png",
+        "selectedIconPath": "images/booth_icon_exhibition.png",
         "text": "展会展位"
       },
-     
+      {
+        "pagePath": "pages/Schedule/Schedule/schedule",
+        "iconPath": "images/booth_icon_schedule_gray.png",
+        "selectedIconPath": "images/booth_icon_schedule.png",
+        "text": "会议日程"
+      },
       {
         "pagePath": "pages/News/News/news",
-        "iconPath": "images/tab_news48.png",
-        "selectedIconPath": "images/tab_news_s48.png",
+        "iconPath": "images/booth_icon_new_gray.png",
+        "selectedIconPath": "images/booth_icon_new.png",
         "text": "会展资讯"
       },
       {
         "pagePath": "pages/Mine/Mine/mine",
-        "iconPath": "images/tab_user48.png",
-        "selectedIconPath": "images/tab_user_s48.png",
+        "iconPath": "images/booth_icon_user_gray.png",
+        "selectedIconPath": "images/booth_icon_user.png",
         "text": "我的"
       }
     ]
   },
-  
   "networkTimeout": {
     "request": 10000,
     "downloadFile": 10000

@@ -2,25 +2,31 @@
 var app = getApp();
 Page({
   data: {
+    identity: '',
+    tags: '',
+    openid: '',
+    codeFlag: true,
+    isGetCodeEnable: false,
+    timeleft: 60,
     topTabBarData: [
       {
-        title: '会展热点',
+        title: '展会资讯',
         didSelected: true
       },
       {
-        title: '会展攻略',
+        title: '展会指南',
         didSelected: false
       }
     ],
     needshowInfo: false,
-    isGetCodeEnable: true,
-    timeleft: 60,
     currentTapIsHotel: true,
     loadingHidden: true,
-    inputPhoneNumber: '',
+    // inputPhoneNumber: '',
     newsData: [
-      
+
     ],
+
+    swiperData: [],
 
     feed: [
       {
@@ -85,6 +91,19 @@ Page({
     var that = this;
     count_down(that);
     loadData(that)
+    // 取出code信息
+    var codeInfo = wx.getStorageSync('codeInfo');
+    that.setData({
+      codeInfo: codeInfo
+    })
+
+    // 获取推广信息
+    var phone = options.phone
+    that.setData({
+      phone: phone
+    })
+
+
   },
   onReady: function () {
     // 页面渲染完成
@@ -161,12 +180,13 @@ Page({
     loadData(that)
   },
 
+  // 轮播图点击开始
   topImageClicked: function (event) {
     var that = this;
     var itemId = event.currentTarget.dataset.itemId;
     console.log("itemId = " + itemId);
     wx.navigateTo({
-      url: '../Details/singleImageDetail/detail?itemId=' + itemId + '&banner=' + 'banner',
+      url: '../Details/singleImageDetail/detail?id=' + itemId + '&indexBaner=' + '1',
       success: function (res) {
         // success
       },
@@ -178,6 +198,7 @@ Page({
       }
     })
   },
+  // 轮播图点击结束
 
   // 置顶资讯点击
   topNewsClicked: function (event) {
@@ -196,94 +217,47 @@ Page({
     })
   },
 
-  // 一般资讯点击事件
+  // 单图模式点击事件
   normalNewsClicked: function (event) {
-    var itemId = event.currentTarget.dataset.itemId;
+    var itemId = event.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '../Details/singleImageDetail/detail?itemId=' + itemId,
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
+      url: '../Details/singleImageDetail/detail?id=' + itemId+'&indexBaner=' + '2'
     })
   },
 
   // 多图资讯点击事件
   mutipleNewsClicked: function (event) {
-    var itemId = event.currentTarget.dataset.itemId;
+    var itemId = event.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '../Details/mutipleImagesDetail/detail?itemId=' + itemId,
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
+      url: '../Details/singleImageDetail/detail?id=' + itemId + '&indexBaner=' + '3',
     })
   },
 
-  // 多图资讯点击事件
-  mutipleNewsClicked: function (event) {
-    var itemId = event.currentTarget.dataset.itemId;
-    wx.navigateTo({
-      url: '../Details/mutipleImagesDetail/detail?itemId=' + itemId,
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
-    })
-  },
-
-  // 视频资讯点击事件
-  videoNewsClicked: function (event) {
-    var itemId = event.currentTarget.dataset.itemId;
-    wx.navigateTo({
-      url: '../Details/videoDetail/detail?itemId=' + itemId,
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
-    })
-  },
 
   // 大图资讯点击事件
   bigNewsClicked: function (event) {
-    var itemId = event.currentTarget.dataset.itemId;
+    var itemId = event.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '../Details/bigImageDetail/detail?itemId=' + itemId,
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
+      url: '../Details/singleImageDetail/detail?id=' + itemId + '&indexBaner=' + '4',
     })
   },
 
+
+  // 视频资讯点击事件
+  videoNewsClicked: function (event) {
+    var itemId = event.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../Details/singleImageDetail/detail?id=' + itemId + '&indexBaner=' + '5'
+    })
+  },
+
+
+
+
+
+
   // scrollView时间响应函数
   upper: function (event) {
-    console.log('upper')
   },
 
   lower: function (event) {
@@ -294,6 +268,127 @@ Page({
 
   scroll: function (event) {
 
+  },
+
+
+  // 处理身份
+  checkboxChange: function (e) {
+    var that = this;
+    that.setData({
+      identity: e.detail.value
+    })
+
+  },
+
+  // 处理标签
+  tagsChange: function (e) {
+    var that = this;
+    that.setData({
+      tags: e.detail.value
+    })
+  },
+
+  // 处理悬浮框的数据提交
+  regist: function (e) {
+    var that = this;
+    if (e.detail.value.tel == '') {
+      wx.showModal({
+        title: '错误',
+        content: '电话号码不能为空！',
+        showCancel: false,
+      })
+      return false
+    }
+    if (e.detail.value.password == '') {
+      wx.showModal({
+        title: '错误',
+        content: '密码不能为空！',
+        showCancel: false,
+      })
+      return false
+    }
+    if (e.detail.value.email == '') {
+      wx.showModal({
+        title: '错误',
+        content: '邮箱不能为空！',
+        showCancel: false,
+      })
+      return false
+    }
+    if (e.detail.value.code == '') {
+      wx.showModal({
+        title: '错误',
+        content: '验证码不能为空！',
+        showCancel: false,
+      })
+      return false
+    }
+    if (that.data.identity.length == 0) {
+      wx.showModal({
+        title: '错误',
+        content: '请选择身份',
+        showCancel: false,
+      })
+      return false
+    }
+    if (that.data.tags.length == 0) {
+      wx.showModal({
+        title: '错误',
+        content: '请至少选择一个标签',
+        showCancel: false,
+      })
+      return false
+    }
+
+    var params = {
+      nick_name: app.globalData.nick_name,
+      tel: e.detail.value.tel,
+      password: e.detail.value.password,
+      opencode: that.data.codeInfo,
+      header: app.globalData.header,
+      code: e.detail.value.code,
+      email: e.detail.value.email,
+      identity: that.data.identity.join(),
+      tags: that.data.tags,
+      customer_number: e.detail.value.customer_number,
+       qrcode: that.data.phone
+    }
+    wx.request({
+      url: app.globalData.host + 'v2/wechat.sign/up',
+      method: 'POST',
+      header: { "Content-Type": "application/x-www-form-urlencoded" },
+      data: params,
+      success: function (res) {
+        console.log(res)
+        if (res.data.code != 0) {
+          wx.showModal({
+            title: '注册失败',
+            content: res.data.msg,
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) { }
+            }
+          })
+        } else {
+          wx.showModal({
+            title: '注册成功',
+            content: '',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                wx.navigateBack(1);
+                app.globalData.didFillinInfo = true;
+                wx.setStorage({
+                  key: 'didFillinInfo',
+                  data: true,
+                })
+              }
+            }
+          })
+        }
+      },
+      error: function (err) { }
+    })
   },
 
   formSubmit: function (e) {
@@ -501,9 +596,9 @@ Page({
       needshowInfo: false
     })
   },
-
   bindKeyInput: function (e) {
     var that = this;
+    console.log(e.detail.value)
     that.setData({
       inputPhoneNumber: e.detail.value
     })
@@ -512,37 +607,67 @@ Page({
   // 获取验证码
   getCode: function (event) {
     var that = this;
-    send_code_countdown(that);
-    that.setData({
-      isGetCodeEnable: false
-    })
-    wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Userapi/sendMsg',
-      data: {
-        tel: that.data.inputPhoneNumber
-      },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      header: { "Content-Type": "application/x-www-form-urlencoded" }, // 设置请求的 header
-      success: function (res) {
-        // success 发送验证码成功
-      },
-      fail: function () {
-        // fail
-        wx.showModal({
-          title: '验证码发送失败，请重试',
-          content: '',
-          showCancel: false,
-          success: function (res) {
-            if (res.confirm) {
-            }
+    var tel = that.data.inputPhoneNumber;
+    if (tel != undefined || '') {
+
+      wx.request({
+        url: 'https://api.jiushang.cn/api/captcha/register',
+        data: {
+          phone: that.data.inputPhoneNumber
+        },
+        method: 'get',
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          'version': 2
+        },
+        success: function (res) {
+          // success 发送验证码成功
+          if (res.data.errCode != 0) {
+            wx.showModal({
+              title: res.data.msg,
+              content: '',
+              showCancel: false
+            })
+          } else {
+            send_code_countdown(that);
+            that.setData({
+              isGetCodeEnable: true,
+              codeFlag: false
+            })
+            wx.showModal({
+              title: '验证码发送成功',
+              content: '',
+              showCancel: false
+            })
           }
-        })
-      },
-      complete: function () {
-        // complete
-      }
-    })
-  }
+        },
+        fail: function () {
+          // fail
+          wx.showModal({
+            title: '验证码发送失败，请重试',
+            content: '',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) { }
+            }
+          })
+        },
+        complete: function () {
+          // complete
+        }
+      })
+    } else {
+      wx.showModal({
+        title: '电话号码为空',
+        content: '',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) { }
+        }
+      })
+    }
+
+  },
 })
 
 var currentPage = 1
@@ -553,7 +678,8 @@ function send_code_countdown(that) {
   if (count == 0) {
     count = 60;
     that.setData({
-      isGetCodeEnable: true
+      isGetCodeEnable: false,
+      codeFlag: true
     })
     return;
   } else {
@@ -594,8 +720,7 @@ function count_down(that) {
     // 放在最后--
     total_micro_second -= 10;
     count_down(that);
-  }
-    , 10)
+  }, 2)
 }
 
 // 时间格式化输出，如03:25:19 86。每10ms都会调用一次
@@ -623,20 +748,55 @@ function fill_zero_prefix(num) {
 function loadData(that) {
   if (that.data.currentTapIsHotel) {
     that.showLoading()
+// 轮播数据获取
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Newsapi/showNews',
+      url: app.globalData.host + "v2/wechat.news/index",
       data: {
-        type: 1,
+        category: 1,
+        type:6
+      },
+      method: 'GET',
+      success: function (res) {
+        console.log(res)
+        if (res.data.data.content.length > 0) {
+          that.setData({
+            swiperData: res.data.data.content
+          })
+        } else {
+
+          wx.showModal({
+            title: '暂时没有数据，小编正在努力中',
+            content: '',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              }
+            }
+          })
+
+        }
+      },
+      fail: function () {
+
+      },
+      complete: function () {
+        // complete
+      }
+    })
+// 其他数据获取
+    wx.request({
+      url: app.globalData.host + "v2/wechat.news/index",
+      data: {
+        category: 1,
+        is_top: 1,
         page: currentPage
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      method: 'GET',
       success: function (res) {
-        // success
         console.log(res);
-        if (res.data.length > 0) {
+        if (res.data.data.content.length > 0) {
           that.setData({
-            newsData: res.data
+            newsData: res.data.data.content
           })
         } else {
 
@@ -667,25 +827,59 @@ function loadData(that) {
         })
       },
       complete: function () {
-        // complete
       }
     })
   } else {
     that.showLoading()
+    // 会展攻略轮播数据获取
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Newsapi/showNews',
+      url: app.globalData.host + "v2/wechat.news/index",
       data: {
-        type: 2,
+        category: 2,
+        type: 6
+      },
+      method: 'GET',
+      success: function (res) {
+        if (res.data.data.content.length > 0) {
+          that.setData({
+            swiperData: res.data.data.content
+          })
+        } else {
+
+          wx.showModal({
+            title: '暂时没有数据，小编正在努力中',
+            content: '',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              }
+            }
+          })
+
+        }
+      },
+      fail: function () {
+
+      },
+      complete: function () {
+        // complete
+      }
+    })
+
+    // 会展攻略其他数据获取
+    wx.request({
+      url: app.globalData.host + "v2/wechat.news/index",
+      data: {
+        category: 2,
+        is_top: 1,
         page: currentPage
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      method: 'GET', 
       success: function (res) {
-        // success
         console.log(res);
-        if (res.data.length > 0) {
+        if (res.data.data.content.length > 0) {
           that.setData({
-            newsData: res.data
+            newsData: res.data.data.content
           })
         }
         that.hideLoading()
@@ -716,28 +910,32 @@ function loadMoreData(that) {
       currentPage += 1;
       that.showLoading()
       wx.request({
-        url: 'https://min.jiushang.cn/index.php/index/Newsapi/showNews',
+        url: app.globalData.host + "v2/wechat.news/index",
         data: {
-          type: 1,
-          page: currentPage
+          category: 1,
+          page: currentPage,
+          is_top: 1
         },
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
+        method: 'GET',
         success: function (res) {
-          // success
           console.log(res);
-          if (res.data.length < 20) {
-            didReachEnd = true;
+          if (res.data.data.lenght > 0) {
+            if (res.data.data.content.length < 20) {
+              didReachEnd = true;
+            } else {
+              didReachEnd = false;
+            }
+
+            if (res.data.data.content.length > 0) {
+              var totalData = that.data.newsData
+              that.setData({
+                newsData: totalData.concat(res.data.data.content)
+              })
+            }
           } else {
-            didReachEnd = false;
+            didReachEnd = true;
           }
 
-          if (res.data.length > 0) {
-            var totalData = that.data.newsData
-            that.setData({
-              newsData: totalData.concat(res.data)
-            })
-          }
           that.hideLoading()
         },
         fail: function () {
@@ -765,27 +963,30 @@ function loadMoreData(that) {
       currentPage += 1;
       that.showLoading()
       wx.request({
-        url: 'https://min.jiushang.cn/index.php/index/Newsapi/showNews',
+        url: app.globalData.host + "v2/wechat.news/index",
         data: {
-          type: 2,
-          page: currentPage
+          category: 2,
+          page: currentPage,
+          is_top: 1
         },
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
+        method: 'GET', 
         success: function (res) {
-          // success
           console.log(res);
-          if (res.data.length < 20) {
-            didReachEnd = true;
-          } else {
-            didReachEnd = false;
-          }
+          if (res.data.data.lenght > 0) {
+            if (res.data.data.content.length < 20) {
+              didReachEnd = true;
+            } else {
+              didReachEnd = false;
+            }
 
-          if (res.data.length > 0) {
-            var totalData = that.data.newsData
-            that.setData({
-              newsData: totalData.concat(res.data)
-            })
+            if (res.data.data.content.length > 0) {
+              var totalData = that.data.newsData
+              that.setData({
+                newsData: totalData.concat(res.data.data.content)
+              })
+            }
+          } else {
+            didReachEnd = true;
           }
           that.hideLoading()
         },

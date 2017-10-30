@@ -10,17 +10,19 @@
     <input bindfocus="bindKeyFocus" bindinput="bindKeyInput" type="text" class="" />
     <image src="../../images/delete.png" class="alldelete" wx:if="{{delete_show}}" bindtap="back"></image>
   </view>
-
   <!--输入框结束-->
+
   <text bindtap="readyToSearch">搜索</text>
 </view>
 <block wx:if="{{showSearchView}}">
   <!--搜索历史开始-->
   <view class="allcom-container allsearch-history">
     <view class="alltitle">历史</view>
-    <block wx:for="{{history}}">
+    <block wx:for="{{history}}" wx:if='{{history!=""}}'>
       <text bindtap="historyClicked" data-keyword="{{item}}" class="alllist">{{item}}</text>
     </block>
+
+    <text wx:if='{{history == ""}}' class='hisory-tips'>没有历史记录</text>
   </view>
 
   <!--搜索历史结束-->
@@ -29,8 +31,8 @@
   <view class="allcom-container allrecomment">
     <view class="alltitle" style="margin-top:24rpx;">推荐</view>
     <block wx:for="{{recommend}}">
-    <view class="recommendCell" bindtap="recommendClicked" data-item-id="{{item.id}}">
-      <text class="alllist">{{item.name}}</text>
+      <view class="recommendCell" bindtap="recommendClicked" data-id="{{item.id}}">
+        <text class="alllist">{{item.company}}</text>
       </view>
     </block>
   </view>

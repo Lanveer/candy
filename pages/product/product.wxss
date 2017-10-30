@@ -1,0 +1,61 @@
+/* pages/product/product.wxss */
+
+.container {
+  width: 750rpx;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*Banner*/
+.banner{
+    width: 750rpx;height:248rpx;
+}
+.banner swiper{
+   height:248rpx; 
+}
+.banner image {
+    width: 750rpx;height: 100%;
+}
+
+.hotelFrontTitleContainer {
+  width: 750rpx;
+  height: 88rpx;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hotelFrontTitleView {
+  width: 400rpx;
+  height: 88rpx;
+  background: #f1f1f1;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+.hotelFrontTitleLine{
+    width: 70rpx;
+    height: 2rpx;
+    background: #999999;
+    margin-top: 44rpx;
+}
+
+.hotelFrontTitleLineLeft{
+    width: 70rpx;
+    height: 2rpx;
+    background: #999999;
+    margin-top: 44rpx;
+    margin-left: 40rpx;
+}
+
+.hotelFrontTitleText{
+    font-size: 32rpx;
+    color: #999999;
+    margin-top: 24rpx;
+    margin-left: 24rpx;
+    margin-right: 24rpx;
+}

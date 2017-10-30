@@ -1,0 +1,52 @@
+<!--pages/Mine/qualifyUpload/qualifyUpload.wxml-->
+
+<view class='hr'></view>
+<form bindsubmit='submit'>
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <view class='title'>封面:</view>
+    <view class='upload'>
+      <view class='upload-box'>
+        <image src='{{product}}'></image>
+      </view>
+      <view class='btn' bindtap='chooseImageTap'>上传</view>
+    </view>
+  </view>
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' placeholder='请输入产品名字' placeholder-class='pl' name='goods_name'></input>
+  </view>
+  <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' placeholder='请输入产品价格' placeholder-class='pl' name='shop_price'></input>
+  </view>
+
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' type='number' placeholder='请输入市场价格' placeholder-class='pl'  name='market_price'></input>
+  </view>
+  <!--选择类型  -->
+  <picker bindchange="typePiker" value="{{Index}}" range="{{typeData}}" range-key="name" style='padding-top:30rpx;'>
+    <view class="picker">
+      选择类别:
+      <view class='hotelName'>{{typeData[Index].name}}</view>
+    </view>
+  </picker>
+
+  <!--选择类型  -->
+
+
+  <!-- <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' placeholder='请输入产地' placeholder-class='pl'></input>
+  </view>
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' placeholder='请输入厂址' placeholder-class='pl'></input>
+  </view>
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <textarea placeholder='输入介绍' placeholder-class='pl'></textarea>
+  </view> -->
+
+  <button formType="submit">提交</button>
+
+</form>

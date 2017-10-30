@@ -1,0 +1,25 @@
+/* pages/Mine/qualify/qualify.wxss */
+
+
+
+.box{
+  border-top: 1px solid #efefef;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  text-align: center;
+}
+.box>view{
+   margin:108rpx auto 20rpx;
+   text-align: center;
+}
+.qualify{
+   width: 281rpx;height: 215rpx;
+   display: block;
+   margin: auto
+
+}
+
+.box>view{
+   font-size: 12pt;color: #666;
+}

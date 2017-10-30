@@ -1,5 +1,5 @@
 /* pages/Exhibition/Exhibition/exhibition.wxss */
-
+@import "../../template_regist/regist.wxss";
 .container {
   width: 750rpx;
   height: auto;
@@ -11,22 +11,23 @@
 /*搜索栏*/
 
 .searchView {
-  width: 610rpx;
-  height: 50rpx;
+  width: 358rpx;
+  height: 70rpx;
   border-radius: 40rpx;
-  border-color: #e8e8e8;
-  border: 2rpx solid #e8e8e8;
-  background: #f1f1f1;
-  margin-top: 10rpx;
+  border-color: #FFE8E6;
+  border: 2rpx solid #FFE8E6;
+  background: #FFFFFF;
+  margin-top: -30rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 99;
 }
 
 .searchContainer {
   width: 260rpx;
-  height: 50rpx;
-  background: #f1f1f1;
+  height: 70rpx;
+  background: #FFFFFF;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -39,25 +40,26 @@
 
 .searchTitle {
   font-size: 24rpx;
-  color: #888;
+  color: #999999;
 }
 
 /*Banner*/
 .banner{
-    width: 750rpx;height:248rpx;
+    width: 750rpx;height:392rpx;
 }
 .banner swiper{
-   height:248rpx; 
+   height:392rpx; 
 }
 .banner image {
-    width: 750rpx;height: 100%;
+    width: 750rpx;
+     height: 100%; 
 }
 
 /*顶部分类信息栏*/
 
 .headerContainerView {
   width: 750rpx;
-  height: 275rpx;
+  height: 170rpx;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -69,7 +71,7 @@
 
 .headerView {
   width: 720rpx;
-  height: 275rpx;
+  height: 170rpx;
   display: flex;
   flex-direction: row;
   /*换行*/
@@ -86,6 +88,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  /* background: red; */
 }
 
 /*分类信息图片*/
@@ -109,11 +112,11 @@
 /*酒店 | 展馆 按钮*/
 .middleTapBar {
   width: 750rpx;
-  height: 66rpx;
+  height: 20rpx;
   background: #F1F1F1;
   display: flex;
   flex-direction: row;
-  margin-top: 10rpx;
+  
 }
 
 .middleBarItem {
@@ -150,88 +153,137 @@
   width: 162rpx;
 }
 
-/*酒店滑动页 - 一个酒店*/
-.hotelBaseView {
-  height: 694rpx;
+.hotelFrontTitleContainer {
   width: 750rpx;
-}
-
-.hotelContainerView {
-  height: 694rpx;
-  width: 750rpx;
-  position: relative;
-}
-
-.leftArrow {
-  width: 48rpx;
-  height: 48rpx;
-  position: absolute;
-  left: 10rpx;
-  bottom: 40%;
-}
-
-.rightArrow {
-  width: 48rpx;
-  height: 48rpx;
-  right: 10rpx;
-  position: absolute;
-  bottom: 40%;
-}
-
-.hotelBackView {
-  height: 694rpx;
-  width: 750rpx;
-  position: relative;
-}
-
-.hotelBackImage {
-  height: 450rpx;
-  width: 750rpx;
-  /*position: absolute;*/
-}
-
-.infoView {
-  width: 618rpx;
-  height: 580rpx;
-  border-radius: 20rpx;
-  text-align: center;
-  position: absolute;
-  top: 90rpx;
-  left: 50%;
-  margin-left: -309rpx;
-  background: white;
-  box-shadow: 0 0 12px rgba(220, 225, 230, 0.7);
-}
-
-.infoImage {
-  width: 430rpx;
-  height: 290rpx;
-  border-radius: 10rpx;
-  margin-top: -62rpx;
-  align-items: center;
-}
-
-.hotelNameView {
-  width: 618rpx;
-  height: 60rpx;
+  height: 88rpx;
+  background: #FFFFFF;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  margin-top: 10rpx;
 }
 
-.hotelCenterName {
-  width: auto;
-  height: 60rpx;
+.hotelFrontTitleView {
+  width: 400rpx;
+  height: 88rpx;
+  /* background: #f1f1f1; */
+  display: flex;
+  flex-direction: row;
+  align-content: center;
 }
 
-.hotelNameFont {
-  font-size: 34rpx;
-  color: #353535;
-  /*margin-left: 100rpx;*/
-  line-height: 60rpx;
+.hotelFrontTitleLine{
+    width: 70rpx;
+    height: 2rpx;
+    background: #999999;
+    margin-top: 44rpx;
 }
+
+.hotelFrontTitleLineLeft{
+    width: 70rpx;
+    height: 2rpx;
+    background: #999999;
+    margin-top: 44rpx;
+    margin-left: 40rpx;
+}
+
+.hotelFrontTitleText{
+    font-size: 32rpx;
+    color: #999999;
+    margin-top: 24rpx;
+    margin-left: 24rpx;
+    margin-right: 24rpx;
+}
+
+/*test  */
+.test{
+  width: 100%;
+  height: 150px;
+  background: #ccc;
+  white-space: nowrap;
+}
+
+.tags{
+  width: 150px;height: 75px;background: green;
+  margin-right: 10px;
+  margin-top: 36px;
+  display: inline-block;
+}
+/*test  */
+
+
+
+/*酒店滑动页 - 一个酒店*/
+.hotelBaseView {
+  /* height: 492rpx; */
+  height:auto;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.scrollViewContainer{
+    /* height: 492rpx; */
+        height:auto;
+     width: 296rpx; 
+      display: flex;
+    flex-direction: column; 
+    overflow: hidden;
+    /* background: green;  */
+    padding-bottom: 10px;
+}
+
+.ContainerImage {
+    height: 392rpx;
+    width: 276rpx;
+    /* background: red; */
+    margin-left: 20rpx; 
+    border-radius: 10rpx;
+    position: relative;
+    /* top: 0rpx;
+    left: 0rpx; */
+}
+
+.ContainerImageView{
+    height: 392rpx;
+    width: 276rpx;
+    /* background: red; */
+    margin-left: 20rpx;
+    border-radius: 10rpx;
+    position: absolute;
+}
+
+.ContainerImageTextView{
+    width: 88rpx;
+    height: 36rpx;
+    background: #000000;
+    position: relative;
+    left: 164rpx;
+    bottom: 60rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.ContainerImageTextViewFont {
+    font-size: 24rpx;
+    color: #3A4247;
+}
+
+.ContainerDesFont{
+    font-size: 24rpx;
+    color: #3A4247;
+    margin-left: 20rpx;
+     margin-top: 0rpx; 
+    line-height: 10rpx;
+}
+
+.hotelContainerView {
+  /* height: 492rpx; */
+  height: auto;
+  overflow: hidden;
+  width: 750rpx;
+}
+
+
 
 .hotelDistanceFont {
   font-size: 20rpx;
@@ -259,20 +311,24 @@
 }
 
 .loactionView {
-  width: 618rpx;
-  height: 60rpx;
+  width: 276rpx;
+  height: 40rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
-  bottom: 0rpx;
-  border-radius: 20rpx;
+  /* bottom: 0rpx;
+  border-radius: 20rpx; */
 }
 
 .locationContainer {
-  width: auto;
-  height: 60rpx;
-  text-align: center;
+width:276rpx;
+height:30rpx;
+margin-left:20rpx;
+margin-top: 0rpx;
+margin-top: -15rpx;
+/* flex-direction: column;
+display: flex; */
 }
 
 .locationImage {
@@ -379,115 +435,69 @@
   margin-left: 10rpx;
 }
 
-/*展馆滑动页*/
-.exhibitionBaseView {
-  height: 694rpx;
-  width: 750rpx;
+.ExhibitionImageView{
+    width: 750rpx;
+    height: 400rpx;
+    border-radius: 10rpx;
 }
 
-.exhibitionBackView {
-  height: 694rpx;
-  width: 750rpx;
-  position: relative;
+.ExhibitonImage{
+    width: 708rpx;
+    height: 386rpx;
+    margin-left: 21rpx;
+    border-radius: 10rpx;
+    box-shadow: 0 0 12px rgba(220, 225, 230, 0.7);
 }
 
-.exhibitionBackImage {
-  height: 450rpx;
-  width: 750rpx;
-  /*position: absolute;*/
+.LocationView{
+    width: 708rpx;
+    height: 30rpx;
+    /* margin-left: 21rpx; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: space-between;
 }
 
-.exhibitionInfoView {
-  width: 618rpx;
-  height: 580rpx;
-  border-radius: 20rpx;
-  text-align: center;
-  position: absolute;
-  top: 90rpx;
-  left: 50%;
-  margin-left: -309rpx;
-  background: white;
-  box-shadow: 0 0 12px rgba(220, 225, 230, 0.7);
+.LocationTitle{
+    font-size: 24rpx;
+    color: #3A4247;
+    /* margin-left: 10rpx; */
 }
 
-.exhibitionInfoImage {
-  width: 430rpx;
-  height: 290rpx;
-  border-radius: 10rpx;
-  margin-top: -62rpx;
-  align-items: center;
+.ExhibitionlocationContainer {
+    width: auto;
+    height: 40rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-.exhibitionNameView {
-  width: 618rpx;
-  height: 60rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  margin-top: 10rpx;
-}
-
-.exhibitionCenterName {
-  width: auto;
-  height: 60rpx;
-}
-
-.exhibitionNameFont {
-  font-size: 34rpx;
-  color: #353535;
-  /*margin-left: 100rpx;*/
-  line-height: 60rpx;
-}
-
-.exhibitionDistanceFont {
-  font-size: 20rpx;
-  color: #888888;
-  margin-left: 30rpx;
-  position: absolute;
-  top: 26rpx;
-}
-
-.exhibitionDescriptionView {
-  width: 498rpx;
-  height: auto;
-  margin: auto;
-  text-align: left;
-  margin-top: 20rpx;
-}
-
-.exhibitionDescriptionFont {
-  font-size: 26rpx;
-  color: #353535;
-}
-
-.exhibitionLoactionView {
-  width: 618rpx;
-  height: 60rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  bottom: 0rpx;
-  border-radius: 20rpx;
-}
-
-.exhibitionLocationContainer {
-  width: auto;
-  height: 60rpx;
-  text-align: center;
-}
-
-.exhibitionLocationImage {
+.ExhibitionlocationImage {
   width: 20rpx;
   height: 20rpx;
 }
 
-.exhibitionLocationFont {
+.ExhibitionlocationFont {
   font-size: 20rpx;
   color: #226298;
   margin-left: 10rpx;
 }
+
+
+
+.ExhibitionDes{
+    width: 708rpx;
+    height: 400rpx;
+}
+
+.ExhibitionDesFont{
+    font-size: 22rpx;
+    color: #666666;
+}
+
+
 
 /*info */
 

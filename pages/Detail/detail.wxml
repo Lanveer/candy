@@ -1,0 +1,36 @@
+<!--pages/Detail/detail.wxml-->
+<view class='play'>
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{detail.goods_images}}">
+      <swiper-item>
+        <image src="{{item.image_url}}" class="slide-image" width="355" height="150" />
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+
+<view class='play-title'>{{detail.goods_name}}</view>
+<view class='info'>
+  <view class='header'>
+    <view class='left-hr'></view>
+    <view>产品参数</view>
+    <view class='right-hr'></view>
+  </view>
+
+  <view class='section' wx:for="{{detail.goods_attrs}}">
+    <text class='left'>{{item.attr_name}}</text>
+    <text class='right'>{{item.attr_value}}</text>
+  </view>
+
+</view>
+
+<view class='detail'>
+  <view class='header'>
+    <view class='left-hr'></view>
+    <view>产品详情</view>
+    <view class='right-hr'></view>
+  </view>
+
+  <!--这里面放富文本  -->
+  <rich-text nodes="{{detail.goods_content_mobile}}"></rich-text>
+</view>

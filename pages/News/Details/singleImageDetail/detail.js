@@ -74,6 +74,181 @@ Page({
     ],
   },
   onLoad: function (options) {
+    // 首页banner的详情开始
+    var that = this;
+    var indexBaner = options.indexBaner;
+    var id = options.id;
+    console.log(indexBaner)
+    switch (parseInt(indexBaner)) {
+      case 0:
+        //首页轮播开始
+        wx.request({
+          url: app.globalData.host + 'v2/wechat.news/read',
+          method: 'get',
+          data: {
+            type: 6,
+            id: id
+          },
+          success: function (res) {
+            if (res.data.code != 0) {
+              wx.showToast({
+                title: '加载失败；',
+              })
+            } else {
+              console.log(res.data.data)
+              that.setData({
+                title: res.data.data.name.length > 18 ? res.data.data.name.substring(0, 18) + '..' : res.data.data.name,
+                indexBannerData: res.data.data,
+                single: true,
+                mult: false,
+                video: false
+              })
+            }
+          }
+        });
+        break;
+
+      case 1:
+        //轮播图模式
+        wx.request({
+          url: app.globalData.host + 'v2/wechat.news/read',
+          method: 'get',
+          data: {
+            type: 6,
+            id: id
+          },
+          success: function (res) {
+            if (res.data.code != 0) {
+              wx.showToast({
+                title: '加载失败；',
+              })
+            } else {
+              console.log(res.data.data)
+              that.setData({
+                title: res.data.data.name.length > 18 ? res.data.data.name.substring(0, 18) + '..' : res.data.data.name,
+                indexBannerData: res.data.data,
+                single: true,
+                mult: false,
+                video: false
+              })
+            }
+          }
+        });
+        break;
+      case 2:
+        //单图模式
+        wx.request({
+          url: app.globalData.host + 'v2/wechat.news/read',
+          method: 'get',
+          data: {
+            id: id
+          },
+          success: function (res) {
+            console.log(res)
+            if (res.data.code != 0) {
+              wx.showToast({
+                title: '加载失败；',
+              })
+            } else {
+              console.log(res.data.data)
+              that.setData({
+                title: res.data.data.name.length > 18 ? res.data.data.name.substring(0, 18) + '..' : res.data.data.name,
+                indexBannerData: res.data.data,
+                single: true,
+                mult: false,
+                video: false
+              })
+            }
+          }
+        });
+        break;
+      case 3:
+        //多图模式
+        wx.request({
+          url: app.globalData.host + 'v2/wechat.news/read',
+          method: 'get',
+          data: {
+            id: id
+          },
+          success: function (res) {
+            console.log(res)
+            if (res.data.code != 0) {
+              wx.showToast({
+                title: '加载失败；',
+              })
+            } else {
+              console.log(res.data.data)
+              that.setData({
+                title: res.data.data.name.length > 18 ? res.data.data.name.substring(0, 18) + '..' : res.data.data.name,
+                indexBannerData: res.data.data,
+                single: false,
+                mult: true,
+                video: false
+              })
+            }
+          }
+        });
+        break;
+      case 4:
+        // 大图模式
+        wx.request({
+          url: app.globalData.host + 'v2/wechat.news/read',
+          method: 'get',
+          data: {
+            id: id
+          },
+          success: function (res) {
+            console.log(res)
+            if (res.data.code != 0) {
+              wx.showToast({
+                title: '加载失败；',
+              })
+            } else {
+              console.log(res.data.data)
+              that.setData({
+                title: res.data.data.name.length > 18 ? res.data.data.name.substring(0, 18) + '..' : res.data.data.name,
+                indexBannerData: res.data.data,
+                single: true,
+                mult: false,
+                video: false
+              })
+            }
+          }
+        });
+        break;
+      case 5:
+        wx.request({
+          url: app.globalData.host + 'v2/wechat.news/read',
+          method: 'get',
+          data: {
+            id: id
+          },
+          success: function (res) {
+            console.log(res)
+            if (res.data.code != 0) {
+              wx.showToast({
+                title: '加载失败；',
+              })
+            } else {
+              console.log(res.data.data)
+              that.setData({
+                title: res.data.data.name.length > 18 ? res.data.data.name.substring(0, 18) + '..' : res.data.data.name,
+                indexBannerData: res.data.data,
+                single: true,
+                mult: false,
+                video: true
+              })
+            }
+          }
+        });
+        break;
+    }
+
+
+    // 首页banner的详情结束
+
+
+
     // 页面初始化 options为页面跳转所带来的参数
     var that = this;
     var uid = wx.getStorageSync('userId')
@@ -96,7 +271,6 @@ Page({
       // header: {}, // 设置请求的 header
       success: function (res) {
         // success
-
         that.setData({
           title: res.data.title,
           editor: res.data.editor,

@@ -1,0 +1,8 @@
+<!--pages/Mine/zhanweiList/zhanweiList.wxml-->
+
+<import src="../../template/template.wxml" />
+<view style='margin-top:20rpx;;'></view>
+<block wx:for="{{zhanweiData}}">
+<template is="list" data="{{item}}" bindtap='list_clicked' />
+  <!-- <template is="list" data="{{item}}" bindtap='list_clicked' /> -->
+</block>

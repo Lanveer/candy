@@ -22,6 +22,7 @@
         <image src="../../images/location.png"></image>
         <text>{{address}}</text>
       </view>
+      <view class="dis-tag" bindtap="locationClicked">距离{{distance}}km</view>
     </view>
   </view>
 
@@ -43,15 +44,15 @@
   <!--label  begin-->
   <view class="label">
     <label></label>
-    <text>{{exhibitionTag}}</text>
+     <text>{{exhibitionTag}}</text> 
   </view>
 
   <!--label over-->
 
   <!--list begin-->
-  <scroll-view class="listScrollView" scroll-y="true" bindscroll="scroll" bindscrolltolower="lower" bindscrolltoupper="upper">
+  <scroll-view class="listScrollView" scroll-y="true" bindscroll="scroll" bindscrolltolower="lower"     bindscrolltoupper="upper">
   <view data-index="{{tab-index}}" wx:if="{{content1}}">
-    <block wx:for="{{floorExhibitionData}}">
+    <block wx:for="{{list_data}}">
       <template is="list" data="{{item}}"></template>
     </block>
   </view>

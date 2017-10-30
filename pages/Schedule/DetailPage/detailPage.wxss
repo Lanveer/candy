@@ -1,5 +1,11 @@
 /* pages/Schedule/DetailPage/detailPage.wxss */
-
+/* img{
+  max-width: 100%;
+  width: 95%;
+  height: auto;
+  display: block;
+  margin: 10rpx auto;
+} */
 .container {
   width: 750rpx;
   height: auto;
@@ -29,15 +35,38 @@
 }
 
 .contentView {
-    width: 710rpx;
+    width: 700rpx;
     height: auto;
     margin-bottom: 10rpx;
+    margin-top: 10px;
+    overflow: hidden;
+    margin: auto;
 }
 
 .contentFont {
     font-size: 28rpx;
     color: #353535;
 }
+.rich-text{
+ width: 95%;
+ height: auto;
+ margin: auto;
+}
+img{
+  width: 90%;
+  height:auto;
+  display: block;
+  margin: auto; 
+}
+.add{
+  font-size: 9pt;
+  color: #333;
+}
+.add>view{
+  margin-bottom: 10rpx;
+}
+
+
 
 /*info */
 

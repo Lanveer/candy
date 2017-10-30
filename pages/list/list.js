@@ -2,28 +2,8 @@
 var app = getApp();
 Page({
   data: {
-    list_data: [
-      {
-        title: '贵州茅台集团有限公司',
-        url: '../../images/show1.png',
-        tip: '五粮液酒店',
-        floor: '一层-24号',
-        contacts: '陈经理',
-        tel: '1545676235',
-        tag: [{ val: '白酒1' }, { val: '红酒1' }, { val: '黑酒1' }]
-      },
-      {
-        title: '宜宾五粮液酒店',
-        url: '../../images/show1.png',
-        tip: '五粮液酒店2',
-        floor: '二层-24号',
-        contacts: '章经理',
-        tel: '1545676235',
-        tag: [{ val: '白酒2' }, { val: '红酒2' }, { val: '黑酒2' }]
-      }
-    ],
     loadingHidden: true,
-    keyword:'',
+    keyword: '',
     needshowInfo: false,
     isGetCodeEnable: true,
     feed: [
@@ -86,62 +66,105 @@ Page({
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-    console.log('list OnLoad...')
     currentPage = 1;
     didReachEnd = false;
     var that = this;
     count_down(that);
-    var uid = wx.getStorageSync('userId');
-    uid = app.globalData.userId;
     var keyword = options.title;
     that.showLoading();
     that.setData({
-      keyword:keyword
+      keyword: keyword
     })
-    wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Boothapi/searchBooth',
-      data: {
-        uid: uid,
-        keyword: keyword
-      },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function (res) {
-        // success
-        that.hideLoading();
-        console.log(res)
-        that.setData({
-          list_data: res.data
-        })
-        if(res.data.length == 0) {
+    if (keyword == '热门') {
+      wx.request({
+        url: app.globalData.host + 'v2/wechat.booth/index',
+        data: {
+          skw: keyword,
+          hot: 1
+        },
+        method: 'GET',
+        success: function (res) {
+          that.hideLoading();
+          if (res.data.code != 0) {
+            wx.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  wx.navigateBack(1)
+                }
+              }
+            })
+          } else {
+            that.setData({
+              list_data: res.data.data.content
+            })
+          }
+        },
+        fail: function () {
+          // fail
+          that.hideLoading();
           wx.showModal({
-          title: '暂时没有数据，小编正在努力中',
-          content: '',
-          showCancel: false,
-          success: function (res) {
-            if (res.confirm) {
+            title: '网络错误，请重新进入',
+            content: '',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              }
             }
-          }
-        })
+          })
+        },
+        complete: function () {
         }
-      },
-      fail: function () {
-        // fail
-        that.hideLoading();
-        wx.showModal({
-          title: '网络错误，请重新进入',
-          content: '',
-          showCancel: false,
-          success: function (res) {
-            if (res.confirm) {
-            }
+      })
+    } else {
+      wx.request({
+        url: app.globalData.host + 'v2/wechat.booth/index',
+        data: {
+          skw: keyword
+        },
+        method: 'GET',
+        success: function (res) {
+          that.hideLoading();
+          if (res.data.code != 0) {
+            wx.showModal({
+              title: '提示',
+              content: res.data.msg,
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  wx.navigateBack(1)
+                }
+              }
+            })
+          } else {
+            console.log(res)
+            that.setData({
+              list_data: res.data.data.content
+            })
           }
-        })
-      },
-      complete: function () {
-        // complete
-      }
-    })
+        },
+        fail: function () {
+          // fail
+          that.hideLoading();
+          wx.showModal({
+            title: '网络错误，请重新进入',
+            content: '',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              }
+            }
+          })
+        },
+        complete: function () {
+          // complete
+        }
+      })
+    }
+
+
   },
   onReady: function () {
     // 页面渲染完成
@@ -173,25 +196,23 @@ Page({
   lower: function (event) {
     var that = this;
     console.log('lower')
-    
+
     var uid = wx.getStorageSync('userId');
     var keyword = that.data.keyword;
     if (!didReachEnd) {
-    that.showLoading();
+      that.showLoading();
       currentPage += 1;
       console.log('currentPage = ' + currentPage)
       that.showLoading()
       wx.request({
-        url: 'https://min.jiushang.cn/index.php/index/Boothapi/searchBooth',
+        url: app.globalData.host + 'v2/wechat.booth/index',
         data: {
-          uid: uid,
-          keyword: keyword,
-          page:currentPage
+          skw: keyword,
+          page: currentPage
         },
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
+        method: 'GET', 
         success: function (res) {
-          // success
+ 
           console.log(res);
           if (res.data.length < 20) {
             didReachEnd = true;
@@ -202,7 +223,7 @@ Page({
           if (res.data.length > 0) {
             var totalData = that.data.list_data
             that.setData({
-              list_data: totalData.concat(res.data)
+              list_data: totalData.concat(res.data.data.content)
             })
           }
           that.hideLoading()
@@ -231,6 +252,15 @@ Page({
 
   },
 
+  list_clicked: function (event) {
+    wx.navigateTo({
+      url: '../exhibitionPos/exhibitionPos?itemId=' + event.currentTarget.dataset.index,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
+
   scroll: function (event) {
 
   },
@@ -248,7 +278,7 @@ Page({
       loadingHidden: true
     })
   },
-formSubmit: function (e) {
+  formSubmit: function (e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
 
     var userId = wx.getStorageSync('userId');
@@ -261,12 +291,6 @@ formSubmit: function (e) {
     }
     contentStr = contentStr.substring(0, contentStr.length - 1)
 
-    // console.log(e.detail.value.userName)
-    // console.log(e.detail.value.userPhoneNumber)
-    // console.log(e.detail.value.province)
-    // console.log(e.detail.value.city)
-    // console.log(contentStr)
-    // console.log(e.detail.value.serviceCode)
     if (!e.detail.value.serviceCode) {
       that.setData({
         serviceCode: e.detail.value.serviceCode

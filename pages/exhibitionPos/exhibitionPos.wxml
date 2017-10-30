@@ -1,0 +1,53 @@
+<!--pages/exhibitionPos/exhibitionPos.wxml-->
+<view class="container">
+
+  <!--banner  -->
+  <view class="banner">
+    <image class="banner-image" src="{{zwData.img}}"></image>
+  </view>
+
+  <!--infoView  -->
+  <view class="infoView">
+    <view class="first_info">
+      <text class="contactName">联系人：{{zwData.contact}}</text>
+      <text class="floor">{{zwData.exhibition_code}}</text>
+    </view>
+    <view class='second_info'>
+      <text class="contactWay">联系方式：{{zwData.tel}}</text>
+    </view>
+
+    <view class="third_info">
+      <view class="tagView">
+        <view class="tag">
+          <text class="tagtext" wx:if="{{zwData.primary_label==null||zwData.primary_label==''?false:true}}">{{zwData.primary_label[0]}}</text>
+          <text class="tagtext" wx:if="{{zwData.two_label==null||zwData.two_label==''?false:true}}">{{zwData.two_label[0]}}</text>
+          <text class="tagtext" wx:if="{{zwData.three_label==null||zwData.three_label==''?false:true}}">{{zwData.three_label[0]}}</text>
+        </view>
+      </view>
+      <view class="imageView" bindtap='collect' wx:if="{{colltcted}}">
+        <image src='../../../images/collect.png'></image>
+      </view>
+      <view class="imageView" bindtap='uncollect' wx:if="{{!colltcted}}">
+        <image src='../../../images/my-d.png'></image>
+      </view>
+    </view>
+    <view>
+
+    </view>
+
+  </view>
+  <!--infoView end  -->
+  <view class="box">
+    <view>产品招商</view>
+
+    <view wx:if="{{!proFlag}}">没有产品信息！</view>
+    <view class='list-box'wx:if="{{proFlag}}">
+      <view class='list' bindtap='productHref' wx:for='{{productList}}' data-index="{{index}}">
+        <image src='{{item.original_img}}'></image>
+        <text>{{item.goods_name}}</text>
+      </view>
+    </view>
+
+  </view>
+
+</view>

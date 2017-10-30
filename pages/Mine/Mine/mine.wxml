@@ -1,132 +1,152 @@
-
 <!--pages/Mine/Mine/mine.wxml-->
+<import src="../../template_regist/regist.wxml" />
+
 <view wx:if="{{!needshowInfo}}" class="container">
-<!--header begin-->
-<view class="header">
-  <view class="user-icon">
-    <image src="{{userHeader}}"></image>
-  </view>
-  <text class="user-name">{{userNick}}</text>
-</view>
-
-<!--header over-->
-
-<!--mine list begin-->
-<view class="mine">
-  <navigator url="../info/info">
-    <view class="list">
-      <image src="../../../images/my-a.png" class="icon"></image>
-      <view class="item">
-        <text>我的信息</text>
-        <image src="../../../images/my-arrow.png" class="item-arrow"></image>
-      </view>
+  <!--header begin-->
+  <view class="header">
+    <view class="user-icon">
+      <image src="{{userInfo.header}}"></image>
     </view>
-  </navigator>
-  <navigator url="../msg/msg">
-    <view class="list">
-      <image src="../../../images/my-b.png" class="icon"></image>
-      <view class="item">
-        <text>资讯历史</text>
-        <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+    <text class="user-name">{{userInfo.nick_name}} </text>
+  </view>
+  <!--header over-->
+
+  <!--mine list begin-->
+  <view class="mine">
+    <navigator url="../info/info" >
+      <view class="list">
+        <image src="../../../images/my-a.png" class="icon"></image>
+        <view class="item">
+          <text>我的信息</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
       </view>
-    </view>
-  </navigator>
-  <navigator url="../feedback/feedback">
-    <view class="list">
-      <image src="../../../images/my-c.png" class="icon"></image>
-      <view class="item" style="border-bottom:none;">
-        <text>投诉反馈</text>
-        <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+    </navigator>
+
+    <navigator url="../../extCollect/extCollect?flag=huang">
+      <view class="list">
+        <image src="../../../images/my-d.png" class="icon"></image>
+        <view class="item">
+          <text>逛展纪录</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
       </view>
+    </navigator>
+    <navigator url="../../extCollect/extCollect?flag=collect">
+      <view class="list">
+        <image src="../../../images/my-d.png" class="icon"></image>
+        <view class="item">
+          <text>我的收藏</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
+      </view>
+    </navigator>
+
+    <navigator url="../feedback/feedback">
+      <view class="list">
+        <image src="../../../images/my-e.png" class="icon"></image>
+        <view class="item">
+          <text>投诉反馈</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
+      </view>
+    </navigator>
+
+    <navigator url="../qualify/qualify" wx:if="{{person}}">
+      <view class="list">
+        <image src="../../../images/my-b.png" class="icon"></image>
+        <view class="item">
+          <text>我的资质</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
+      </view>
+    </navigator>
+    <navigator url="../zhanweiList/zhanweiList" wx:if="{{person}}">
+      <view class="list">
+        <image src="../../../images/my-c.png" class="icon"></image>
+        <view class="item" style="border-bottom:none;">
+          <text>展位信息</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
+      </view>
+    </navigator>
+    <!-- <navigator url="../../product/product" wx:if="{{person}}">
+      <view class="list">
+        <image src="../../../images/my-d.png" class="icon"></image>
+        <view class="item">
+          <text>产品信息</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
+      </view>
+    </navigator> -->
+
+  </view>
+
+
+  <!--mine list over-->
+
+
+  <!--second part begin  -->
+  <view class="mine" style='margin-top:10pt;' wx:if="{{person}}">
+    <navigator url="../qualifyUpload/qualifyUpload">
+      <view class="list">
+        <image src="../../../images/my-b.png" class="icon"></image>
+        <view class="item">
+          <text>资质上传</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
+      </view>
+    </navigator>
+
+    <navigator bindtap='zhanweiupload'>
+      <view class="list">
+        <image src="../../../images/my-b.png" class="icon"></image>
+        <view class="item">
+          <text>展位上传</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
+      </view>
+    </navigator>
+
+    <navigator url="../productUpload/productUpload">
+      <view class="list">
+        <image src="../../../images/my-b.png" class="icon"></image>
+        <view class="item">
+          <text>产品上传</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
+      </view>
+    </navigator>
+
+  </view>
+  <!--second part over  -->
+
+  <!--footer info begin-->
+  <view class="footer-info">
+    <view class="erweima">
+      <image src="../../../images/erweima.png"></image>
     </view>
-  </navigator>
-</view>
+    <view class="info">
+      <text>扫描二维码</text>
+      <text>下载酒商app</text>
+      <text>了解更多行业动态</text>
+    </view>
+    <view class="footer-bar">
+      <text>客服咨询电话：4000-028-999</text>
+    </view>
+    <view wx:if="{{showInfo}}" class="infoView">
+      <text>成都子奇科技有限公司提供技术支持</text>
+    </view>
+  </view>
 
-<!--mine list over-->
-
-<!--footer info begin-->
-<view class="footer-info">
-  <view class="erweima">
-    <image src="../../../images/erweima.png"></image>
-  </view>
-  <view class="info">
-    <text>扫描二维码</text>
-    <text>下载酒商app</text>
-    <text>了解更多行业动态</text>
-  </view>
-  <view class="footer-bar">
-    <text>客服咨询电话：4000-028-999</text>
-  </view>
-  <view wx:if="{{showInfo}}" class="infoView">
-    <text>成都子奇科技有限公司提供技术支持</text>
-  </view>
-</view>
-
-<!--footer info over-->
+  <!--footer info over-->
 </view>
 
 <!--info -->
 <view wx:else id="info">
-<loading hidden="{{loadingHidden}}">
+  <loading hidden="{{loadingHidden}}">
     提交中...
-</loading>
-  <form bindsubmit="formSubmit" bindreset="formReset">
-    <view class="form-item" style="margin-top:20rpx;">
-      <view class="form-left">
-        <text>*</text>姓 名:</view>
-      <view class="form-right">
-        <input name="userName" type="text" />
-      </view>
-    </view>
-    <view class="form-item" style="margin-top:20rpx;">
-      <view class="form-left">
-        <text>*</text>联系电话:</view>
-      <view class="form-right">
-        <input name="userPhoneNumber" bindinput="bindKeyInput" />
-      </view>
-    </view>
-    <view class="form-item" style="margin-top:20rpx;">
-      <view class="form-left">
-        <text>*</text>手机验证:</view>
-      <view class="form-right other-right">
-        <input name="vertifyCode" type="text" class='phone-code' />
-        <view bindtap="getCode" wx:if="{{isGetCodeEnable}}" class="get-code">获取验证码</view>
-        <view wx:else class="get-code-disable">{{timeleft}}秒后重新获取</view>
-      </view>
-    </view>
-    <view class="form-item" style="margin-top:20rpx;">
-      <view class="form-left">
-        <text>*</text>所在区域:</view>
-      <view class="form-right other-right">
-        <input name="province" type="text" class="province" />省
-        <input name="city" type="text" class="area" />市</view>
-    </view>
+  </loading>
 
-    <!--分割线开始-->
-    <view style="width:100%;height:15rpx;background:#f1f1f1;"></view>
-
-    <!--分割线结束-->
-    <view class="form-item" style="margin-top:20rpx;">
-      <view class="form-left" style="margin-left:5rpx;">客户服务码:</view>
-      <view class="form-right">
-        <input name="serviceCode" type="text" />
-      </view>
-    </view>
-    <view class="" style="border-top:1rpx solid #e8e8e8;width:676rp;margin:auto;">
-      <view class="form-left" style="margin-top:10rpx;width:100%;">
-        <text>*</text>你想了解哪些展位信息(可多选):</view>
-      <view class="form-down">
-        <checkbox-group name="checkBoxGroup" bindchange="checkboxChange" class="check-box">
-          <block wx:for="{{feed}}">
-          <label class="checkbox">
-            <checkbox value="{{item.title}}" checked="{{item.isChecked}}" size="20" />{{item.title}}
-          </label>
-          </block>
-        </checkbox-group>
-      </view>
-      <button formType="submit" class="submit">提交信息</button>
-      <view class="tips">完善资料后可查看更多详细信息</view>
-    </view>
-  </form>
-
+  <template is="login" data="{{timeleft,isGetCodeEnable,codeFlag}}"></template>
 </view>

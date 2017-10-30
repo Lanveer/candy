@@ -1,0 +1,56 @@
+
+<!--逛展记录  -->
+<view wx:if="{{!tp}}">
+  <view class='tp' wx:if="{{!empty}}">没有逛展记录</view>
+  <view class='box' wx:for='{{listData}}'>
+    <view class='header'>
+      <view>{{item.company}}</view>
+      <view>{{item.exhibition.name}}</view>
+    </view>
+
+    <view class='body'>
+      <view class='left'>
+        <image src='{{item.img}}'></image>
+      </view>
+      <view class='right'>
+        <text>展位号： {{item.exhibition.exhibition_code}}</text>
+        <text>联系人： {{item.contact}}</text>
+        <text>联系方式：{{item.tel}}</text>
+        <view class='tags'>
+          <text class='tag' wx:if='{{item.primary_label==null?false:true}}'>{{item.primary_label[0]}}</text>
+          <text class='tag' wx:if='{{item.two_label==null?false:true}}'>{{item.two_label[0]}}</text>
+          <text class='tag' wx:if='{{item.three_label==null?false:true}}'>{{item.three_label[0]}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+<!--收藏记录  -->
+<view wx:if="{{tp}}">
+  <view class='tp' wx:if="{{!empty}}">没有收藏记录</view>
+  <view class='box' wx:for='{{listData}}'>
+    <view class='header'>
+      <view>{{item.booth.company}}</view>
+      <view>{{item.booth.exhibition.name}}</view>
+    </view>
+
+    <view class='body'>
+      <view class='left'>
+        <image src='{{item.booth.img}}'></image>
+      </view>
+      <view class='right'>
+        <text>展位号： {{item.booth.exhibition.exhibition_code}}</text>
+        <text>联系人： {{item.booth.contact}}</text>
+        <text>联系方式：{{item.booth.tel}}</text>
+        <view class='tags'>
+          <text class='tag' wx:if='{{item.booth.primary_label==null?false:true}}'>{{item.booth.primary_label[0]}}</text>
+          <text class='tag' wx:if='{{item.booth.two_label==null?false:true}}'>{{item.booth.two_label[0]}}</text>
+          <text class='tag' wx:if='{{item.booth.three_label==null?false:true}}'>{{item.booth.three_label[0]}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

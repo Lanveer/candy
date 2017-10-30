@@ -1,0 +1,17 @@
+<!--pages/Mine/qualify/qualify.wxml-->
+
+
+<view class='box'>
+
+  <view>
+    <image src='../../../images/qualify.png' class='qualify'></image>
+    <image src='../../../images/qualify.png' class='qualify'></image>
+  </view>
+
+
+  <view>您已完成资质审核</view>
+
+  <view style='margin-top:6pt;'>可登陆酒商网查看资质审核信息</view>
+
+
+</view>

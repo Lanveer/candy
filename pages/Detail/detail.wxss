@@ -1,0 +1,94 @@
+/* pages/Detail/detail.wxss */
+
+page {
+  background: #eaf0f4;
+}
+
+.play {
+  width: 100%;
+  height: 440rpx;
+  border-top: 1px solid #efefef;
+  background: #fff;
+}
+
+.play >swiper {
+  height: 100%;
+}
+
+.play-title {
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 10pt;
+  color: #333;
+  padding-left: 20rpx;
+  background: #fff;
+}
+
+.info {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  background: #fff;
+  margin-top: 10pt;
+}
+
+.header {
+  height: 40pt;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: space-around;
+  border-bottom: 1rpx solid #efefef;
+}
+
+.header>view {
+  font-size: 10pt;
+  color: #999;
+}
+
+.left-hr {
+  width: 84rpx;
+  height: 1px;
+  background: #999;
+  margin-left: 50pt;
+}
+
+.right-hr {
+  width: 84rpx;
+  height: 1px;
+  background: #999;
+  margin-right: 50pt;
+}
+
+.section {
+  height: 100rpx;
+  border-bottom: 1rpx solid #efefef;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+  font-size: 10pt;
+  color: #333;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.left {
+ width: 200rpx;
+ margin-left: 10pt;
+}
+
+.right {
+  margin-left: 20pt;
+}
+
+
+.detail{
+   width: 100%;
+   height: auto;
+   overflow: hidden;
+   margin-top: 10pt;background: #fff;
+}

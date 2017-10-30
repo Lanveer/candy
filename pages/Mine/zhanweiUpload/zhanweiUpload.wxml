@@ -1,0 +1,112 @@
+<!--pages/Mine/qualifyUpload/qualifyUpload.wxml-->
+
+<view class='hr'></view>
+<form bindsubmit='addZhanwei'>
+  <view class='box item' style='padding-top:50rpx;'>
+    <!-- <view class='title'>展位名:</view> -->
+    <input class='input' placeholder='请输入名称' placeholder-class='pl' name='company'></input>
+  </view>
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <!-- <view class='title'>展位名:</view> -->
+    <input class='input' placeholder='请输入介绍' placeholder-class='pl' name='introduce'></input>
+  </view>
+
+  <!--选择酒店开始  -->
+  <picker bindchange="hotelPiker" value="{{Index}}" range="{{hotelData}}" range-key="name" style='padding-top:30rpx;'>
+    <view class="picker">
+      选择酒店:
+      <view class='hotelName'>{{hotelData[Index].name}}</view>
+    </view>
+  </picker>
+
+  <!--选择酒店结束  -->
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <!-- <view class='title'>展位名:</view> -->
+    <input class='input' placeholder='请输入楼层' placeholder-class='pl' name='floor'></input>
+  </view>
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <!-- <view class='title'>展位名:</view> -->
+    <input class='input' placeholder='请输入展位号' placeholder-class='pl' name='exhibition_code'></input>
+  </view>
+
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <!-- <view class='title'>联系人:</view> -->
+    <input class='input' placeholder='请输入联系人' placeholder-class='pl' name='contact'></input>
+  </view>
+
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <!-- <view class='title'>展位名:</view> -->
+    <input class='input' placeholder='请输入地址' placeholder-class='pl' name='address'></input>
+  </view>
+
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <!-- <view class='title'>联系方式:</view> -->
+    <input class='input' placeholder='请输入联系方式' placeholder-class='pl' name='tel'></input>
+  </view>
+
+  <!--选择时间  -->
+  <picker mode="date" value="{{date}}" start="2017-10-01" end="2019-09-01" bindchange="startTime" style='padding-top:50rpx;'>
+    <view class="picker">
+      开始时间:
+      <view class='hotelName'>{{starTime}}</view>
+    </view>
+  </picker>
+
+
+  <picker mode="date" value="{{date}}" start="2017-10-01" end="2019-09-01" bindchange="endTime" style='padding-top:50rpx;'>
+    <view class="picker">
+      结束时间:
+      <view class='hotelName'>{{endTime}}</view>
+    </view>
+  </picker>
+
+  <!--选择时间  -->
+
+
+  <!--是否热门开始  -->
+  <view class="picker" style='margin-top:50rpx;'>
+    是否热门:
+    <radio-group bindchange="radioChange" style='margin-left:10px;;'>
+      <label wx:for="{{items}}">
+        <radio value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+      </label>
+    </radio-group>
+  </view>
+
+  <!--是否热门结束  -->
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <view class='title'>标签:</view>
+
+    <view class='tags'>
+      <checkbox-group bindchange="checkboxChange">
+        <label class="checkbox" wx:for="{{tags}}" wx:for-item="idx">
+          <checkbox value="{{idx.value}}" checked="{{idx.checked}}" />{{idx.value}}
+        </label>
+      </checkbox-group>
+
+    </view>
+
+  </view>
+  <view class='box item' style='padding-top:50rpx;'>
+    <view class='title'>封面:</view>
+    <view class='upload'>
+      <view class='upload-box'>
+        <image src='{{cover}}'></image>
+      </view>
+      <view class='btn' bindtap='chooseImageTap'>上传</view>
+    </view>
+  </view>
+
+
+
+
+  <button formType="submit">提交</button>
+
+</form>
