@@ -30,7 +30,7 @@ Page({
     wx.request({
       url: app.globalData.host + 'v2/wechat.booth/read',
       method: 'get',
-      data: { id: itemId },
+      data: { id: itemId,user_id: that.data.user_id},
       success: function (res) {
         if (res.data.code != 0) {
           wx.showToast({
@@ -106,15 +106,32 @@ Page({
   productHref: function (e) {
     var that=this;
     var idx = e.currentTarget.dataset.index;
-    wx.navigateTo({
-      url: '../Detail/detail?idx='+idx,
-    });
+    var flag= e.currentTarget.dataset.flag;
+ console.log(flag)
+    if(flag!=1){
+        wx.navigateTo({
+            url: '../Detail/detail?idx=' + idx,
+        });
 
-    var data = that.data.productList;
-    var transData=data[idx];
-    wx.setStorageSync('transData', transData)
+        var data = that.data.productList;
+        var transData = data[idx];
+        wx.setStorageSync('transData', transData)
+    }else{
+        wx.showModal({
+            title: '提示',
+            content: '产品正在审核中！',
+            showCancel:false,
+            success:function(res){
+                if(res.confirm){
+                    wx.navigateTo({
+                        url: 'exhibitionPos/exhibitionPos',
+                    })
+                }
+            }
+        })
+    }
+   
   },
-
   //收藏
   collect: function () {
     var that = this;

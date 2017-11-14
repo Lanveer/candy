@@ -48,7 +48,15 @@ Page({
       showSearchView: false
     })
 
+
+    if (that.data.inputValue==''){
+      wx.showModal({
+        title: '提示',
+        content: '请输入关键词',
+      })
+    }
     that.showLoading();
+
     wx.request({
       url: app.globalData.host + 'v2/wechat.booth/index',
       data: {
@@ -104,6 +112,20 @@ Page({
       }
     })
 
+  },
+
+
+  list_clicked: function (event) {
+    // 用户行为统计
+    var name = event.currentTarget.dataset.name;
+    app.userAct('展位', name)
+
+    wx.navigateTo({
+      url: '../exhibitionPos/exhibitionPos?itemId=' + event.currentTarget.dataset.index,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
   },
 
   onLoad: function (options) {

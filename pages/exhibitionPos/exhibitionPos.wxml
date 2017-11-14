@@ -15,7 +15,6 @@
     <view class='second_info'>
       <text class="contactWay">联系方式：{{zwData.tel}}</text>
     </view>
-
     <view class="third_info">
       <view class="tagView">
         <view class="tag">
@@ -25,10 +24,10 @@
         </view>
       </view>
       <view class="imageView" bindtap='collect' wx:if="{{colltcted}}">
-        <image src='../../../images/collect.png'></image>
+        <image src='/images/collect.png'></image>
       </view>
       <view class="imageView" bindtap='uncollect' wx:if="{{!colltcted}}">
-        <image src='../../../images/my-d.png'></image>
+        <image src='/images/my-d.png'></image>
       </view>
     </view>
     <view>
@@ -40,9 +39,10 @@
   <view class="box">
     <view>产品招商</view>
 
-    <view wx:if="{{!proFlag}}">没有产品信息！</view>
+    <view wx:if="{{!proFlag}}">没有上传信息，请到现场了解
+</view>
     <view class='list-box'wx:if="{{proFlag}}">
-      <view class='list' bindtap='productHref' wx:for='{{productList}}' data-index="{{index}}">
+      <view class='list' bindtap='productHref' wx:for='{{productList}}' data-flag='{{item.is_user_upload}}' data-index="{{index}}">
         <image src='{{item.original_img}}'></image>
         <text>{{item.goods_name}}</text>
       </view>

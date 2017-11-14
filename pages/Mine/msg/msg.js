@@ -85,7 +85,7 @@ Page({
       title: '资讯历史'
     })
     var that = this;
-    count_down(that);
+    //count_down(that);
   },
   onReady: function () {
     // 页面渲染完成

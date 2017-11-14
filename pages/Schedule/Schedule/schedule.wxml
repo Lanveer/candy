@@ -1,6 +1,5 @@
-
 <!--pages/Schedule/Schedule/schedule.wxml-->
-<import src="../../template_regist/regist.wxml"/>
+<import src="../../template_regist/regist.wxml" />
 <view wx:if="{{!needshowInfo}}" class="container">
   <loading hidden="{{loadingHidden}}">
     加载中...
@@ -27,11 +26,11 @@
   <!--日程列表-->
 
   <!--<view class="listView">-->
-  <scroll-view  class="listScrollView" scroll-y="true" bindscroll="scroll" bindscrolltolower="lower" bindscrolltoupper="upper">
+  <scroll-view class="listScrollView" scroll-y="true" bindscroll="scroll" bindscrolltolower="lower" bindscrolltoupper="upper">
     <block wx:for="{{scheduleData}}">
       <view class="cellView" bindtap="cellItemClicked" data-item-id="{{item.id}}">
         <view class="cellTitleView">
-            <text class="cellTitleFont">{{item.theme}}</text>
+          <text class="cellTitleFont">{{item.theme}}</text>
         </view>
         <view class="cellImageView">
           <image class="cellImage" src="{{item.cover}}"></image>
@@ -44,7 +43,7 @@
           </view>
           <view class="timeView">
             <image class="timeImage" src="../../../images/date@2x.png"></image>
-            <text class="timeFont">{{item.date.title}}  {{item.time}}</text>
+            <text class="timeFont">{{item.date.title}} {{item.time}}</text>
           </view>
           <view class="locationView" catchtap="locationClicked" data-lat="{{item.latitude}}" data-lng="{{item.longitude}}" data-name="{{item.theme}}" data-location="{{item.address}}">
             <image class="locationImage" src="../../../images/location@2x.png"></image>
@@ -66,6 +65,6 @@
   <loading hidden="{{loadingHidden}}">
     提交中...
   </loading>
-<template is="regist" data="{{timeleft,isGetCodeEnable,codeFlag}}"></template>
+  <template is="regist" data="{{timeleft,isGetCodeEnable,codeFlag}}"></template>
 
 </view>

@@ -13,7 +13,7 @@
         <image src='{{item.img}}'></image>
       </view>
       <view class='right'>
-        <text>展位号： {{item.exhibition.exhibition_code}}</text>
+        <text>展位号： {{item.exhibition_code}}</text>
         <text>联系人： {{item.contact}}</text>
         <text>联系方式：{{item.tel}}</text>
         <view class='tags'>
@@ -30,7 +30,7 @@
 <!--收藏记录  -->
 <view wx:if="{{tp}}">
   <view class='tp' wx:if="{{!empty}}">没有收藏记录</view>
-  <view class='box' wx:for='{{listData}}'>
+  <view class='box' wx:for='{{listData}}' bindtap='list_clicked' data-index="{{item.id}}" data-name="{{item.company}}">
     <view class='header'>
       <view>{{item.booth.company}}</view>
       <view>{{item.booth.exhibition.name}}</view>
@@ -41,7 +41,7 @@
         <image src='{{item.booth.img}}'></image>
       </view>
       <view class='right'>
-        <text>展位号： {{item.booth.exhibition.exhibition_code}}</text>
+        <text>展位号： {{item.booth.exhibition_code}}</text>
         <text>联系人： {{item.booth.contact}}</text>
         <text>联系方式：{{item.booth.tel}}</text>
         <view class='tags'>

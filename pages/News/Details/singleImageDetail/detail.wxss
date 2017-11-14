@@ -11,12 +11,15 @@
     width: 750rpx;
     height:auto;
     text-align: center;
+      padding-top: 20rpx;
+    padding-bottom: 20rpx;
 }
 
 .titleFont {
     font-size: 36rpx;
     color: #353535;
-    line-height: 86rpx;
+padding-top: 10rpx;
+padding-bottom: 10rpx;
 }
 
 .autherInfoView {

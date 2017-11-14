@@ -97,12 +97,28 @@ Page({
       codeInfo: codeInfo
     })
 
+    //获取code信息---这里的code需要从新获取
+    wx.login({
+      success: function (res) {
+        console.log(res.code)
+        that.setData({
+          newCode: res.code
+        })
+      }
+    })
+
     // 获取推广信息
-    var phone = options.phone
+    var phone = wx.getStorageSync('phone')
     that.setData({
       phone: phone
     })
 
+    // 获取经纬度
+    var location = wx.getStorageSync('location');
+    that.setData({
+      longitude: location.longitude,
+      latitude: location.latitude
+    })
 
   },
   onReady: function () {
@@ -221,7 +237,7 @@ Page({
   normalNewsClicked: function (event) {
     var itemId = event.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '../Details/singleImageDetail/detail?id=' + itemId+'&indexBaner=' + '2'
+      url: '../Details/singleImageDetail/detail?id=' + itemId + '&indexBaner=' + '2'
     })
   },
 
@@ -307,14 +323,14 @@ Page({
       })
       return false
     }
-    if (e.detail.value.email == '') {
-      wx.showModal({
-        title: '错误',
-        content: '邮箱不能为空！',
-        showCancel: false,
-      })
-      return false
-    }
+    // if (e.detail.value.email == '') {
+    //   wx.showModal({
+    //     title: '错误',
+    //     content: '邮箱不能为空！',
+    //     showCancel: false,
+    //   })
+    //   return false
+    // }
     if (e.detail.value.code == '') {
       wx.showModal({
         title: '错误',
@@ -344,22 +360,27 @@ Page({
       nick_name: app.globalData.nick_name,
       tel: e.detail.value.tel,
       password: e.detail.value.password,
-      opencode: that.data.codeInfo,
+      opencode: that.data.newCode,
       header: app.globalData.header,
       code: e.detail.value.code,
-      email: e.detail.value.email,
-      identity: that.data.identity.join(),
+      email: e.detail.value.tel + '@jiushang.cn',
+      identity: that.data.identity,
       tags: that.data.tags,
       customer_number: e.detail.value.customer_number,
-       qrcode: that.data.phone
+      qrcode: that.data.phone,
+      longitude: that.data.longitude,
+      latitude: that.data.latitude
     }
+    wx.showLoading({
+      title: '加载中...',
+    })
     wx.request({
       url: app.globalData.host + 'v2/wechat.sign/up',
       method: 'POST',
       header: { "Content-Type": "application/x-www-form-urlencoded" },
       data: params,
       success: function (res) {
-        console.log(res)
+        wx.hideLoading();
         if (res.data.code != 0) {
           wx.showModal({
             title: '注册失败',
@@ -376,7 +397,10 @@ Page({
             showCancel: false,
             success: function (res) {
               if (res.confirm) {
-                wx.navigateBack(1);
+                // wx.navigateBack(1);
+                  that.setData({
+                      needshowInfo: false
+                  })
                 app.globalData.didFillinInfo = true;
                 wx.setStorage({
                   key: 'didFillinInfo',
@@ -720,7 +744,7 @@ function count_down(that) {
     // 放在最后--
     total_micro_second -= 10;
     count_down(that);
-  }, 2)
+  }, 10)
 }
 
 // 时间格式化输出，如03:25:19 86。每10ms都会调用一次
@@ -748,30 +772,24 @@ function fill_zero_prefix(num) {
 function loadData(that) {
   if (that.data.currentTapIsHotel) {
     that.showLoading()
-// 轮播数据获取
+    // 轮播数据获取
     wx.request({
       url: app.globalData.host + "v2/wechat.news/index",
       data: {
         category: 1,
-        type:6
+        type: 6
       },
       method: 'GET',
       success: function (res) {
         console.log(res)
-        if (res.data.data.content.length > 0) {
+        if (res.data.data != '' && res.data.data.content.length > 0) {
           that.setData({
             swiperData: res.data.data.content
           })
         } else {
 
-          wx.showModal({
-            title: '暂时没有数据，小编正在努力中',
-            content: '',
-            showCancel: false,
-            success: function (res) {
-              if (res.confirm) {
-              }
-            }
+          wx.showToast({
+            title: '暂时没有轮播数据',
           })
 
         }
@@ -783,7 +801,7 @@ function loadData(that) {
         // complete
       }
     })
-// 其他数据获取
+    // 其他数据获取
     wx.request({
       url: app.globalData.host + "v2/wechat.news/index",
       data: {
@@ -794,7 +812,7 @@ function loadData(that) {
       method: 'GET',
       success: function (res) {
         console.log(res);
-        if (res.data.data.content.length > 0) {
+        if (res.data.data != '' && res.data.data.content.length > 0) {
           that.setData({
             newsData: res.data.data.content
           })
@@ -840,21 +858,15 @@ function loadData(that) {
       },
       method: 'GET',
       success: function (res) {
-        if (res.data.data.content.length > 0) {
+        if (res.data.data != '' && res.data.data.content.length > 0) {
           that.setData({
             swiperData: res.data.data.content
           })
         } else {
-
-          wx.showModal({
-            title: '暂时没有数据，小编正在努力中',
-            content: '',
-            showCancel: false,
-            success: function (res) {
-              if (res.confirm) {
-              }
-            }
+          wx.showToast({
+            title: '暂时没有轮播数据',
           })
+
 
         }
       },
@@ -874,10 +886,10 @@ function loadData(that) {
         is_top: 1,
         page: currentPage
       },
-      method: 'GET', 
+      method: 'GET',
       success: function (res) {
         console.log(res);
-        if (res.data.data.content.length > 0) {
+        if (res.data.data != '' && res.data.data.content.length > 0) {
           that.setData({
             newsData: res.data.data.content
           })
@@ -918,45 +930,46 @@ function loadMoreData(that) {
         },
         method: 'GET',
         success: function (res) {
-          console.log(res);
-          if (res.data.data.lenght > 0) {
+          if (res.data.data != '' && res.data.data.content.lenght > 0) {
+            console.log(res)
+            var totalData = that.data.newsData;
+            that.setData({
+              newsData: totalData.concat(res.data.data.content)
+            })
             if (res.data.data.content.length < 20) {
               didReachEnd = true;
             } else {
               didReachEnd = false;
             }
 
-            if (res.data.data.content.length > 0) {
-              var totalData = that.data.newsData
-              that.setData({
-                newsData: totalData.concat(res.data.data.content)
-              })
-            }
+            // if (res.data.data.content.length > 0) {
+            //   var totalData = that.data.newsData
+            //   that.setData({
+            //     newsData: totalData.concat(res.data.data.content)
+            //   })
+            // }
           } else {
+            var totalData = that.data.newsData;
+            that.setData({
+              newsData: totalData.concat(res.data.data.content)
+            })
             didReachEnd = true;
           }
 
           that.hideLoading()
-        },
-        fail: function () {
-          // fail
-          that.hideLoading()
-          wx.showModal({
-            title: '数据加载失败，请重试',
-            content: '',
-            showCancel: false,
-            success: function (res) {
-              if (res.confirm) {
-              }
-            }
-          })
-        },
-        complete: function () {
-          // complete
         }
       })
     } else {
-      console.log('reach end...')
+      wx.showModal({
+        title: '提示',
+        content: '没有更多了',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            // wx.navigateBack(1)
+          }
+        }
+      })
     }
   } else {
     if (!didReachEnd) {
@@ -969,24 +982,33 @@ function loadMoreData(that) {
           page: currentPage,
           is_top: 1
         },
-        method: 'GET', 
+        method: 'GET',
         success: function (res) {
-          console.log(res);
-          if (res.data.data.lenght > 0) {
+
+          if (res.data.data != '' && res.data.data.content.lenght > 0) {
+            console.log(res);
+            var totalData = that.data.newsData
+            that.setData({
+              newsData: totalData.concat(res.data.data.content)
+            })
             if (res.data.data.content.length < 20) {
               didReachEnd = true;
             } else {
               didReachEnd = false;
             }
 
-            if (res.data.data.content.length > 0) {
-              var totalData = that.data.newsData
-              that.setData({
-                newsData: totalData.concat(res.data.data.content)
-              })
-            }
+            // if (res.data.data.content.length > 0) {
+            //   var totalData = that.data.newsData
+            //   that.setData({
+            //     newsData: totalData.concat(res.data.data.content)
+            //   })
+            // }
           } else {
             didReachEnd = true;
+            var totalData = that.data.newsData
+            that.setData({
+              newsData: totalData.concat(res.data.data.content)
+            })
           }
           that.hideLoading()
         },
@@ -1008,6 +1030,16 @@ function loadMoreData(that) {
         }
       })
     } else {
+      wx.showModal({
+        title: '提示',
+        content: '没有更多了',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            // wx.navigateBack(1)
+          }
+        }
+      })
       console.log('reach end...')
     }
   }

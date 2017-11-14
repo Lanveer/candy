@@ -1,9 +1,8 @@
 <!--pages/Mine/Mine/mine.wxml-->
 <import src="../../template_regist/regist.wxml" />
-
 <view wx:if="{{!needshowInfo}}" class="container">
   <!--header begin-->
-  <view class="header">
+  <view class="header" bindtap='headerClicked'>
     <view class="user-icon">
       <image src="{{userInfo.header}}"></image>
     </view>
@@ -13,11 +12,11 @@
 
   <!--mine list begin-->
   <view class="mine">
-    <navigator url="../info/info" >
+    <navigator url="../message/message">
       <view class="list">
         <image src="../../../images/my-a.png" class="icon"></image>
         <view class="item">
-          <text>我的信息</text>
+          <text>我的消息</text>
           <image src="../../../images/my-arrow.png" class="item-arrow"></image>
         </view>
       </view>
@@ -25,7 +24,7 @@
 
     <navigator url="../../extCollect/extCollect?flag=huang">
       <view class="list">
-        <image src="../../../images/my-d.png" class="icon"></image>
+        <image src="../../../images/personal_icon_gzjl.png" class="icon"></image>
         <view class="item">
           <text>逛展纪录</text>
           <image src="../../../images/my-arrow.png" class="item-arrow"></image>
@@ -52,11 +51,20 @@
       </view>
     </navigator>
 
-    <navigator url="../qualify/qualify" wx:if="{{person}}">
+    <navigator bindtap='myQualify'>
       <view class="list">
         <image src="../../../images/my-b.png" class="icon"></image>
         <view class="item">
           <text>我的资质</text>
+          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
+        </view>
+      </view>
+    </navigator>
+    <navigator bindtap='qualifyUpload'>
+      <view class="list">
+        <image src="../../../images/personal_icon_zzsc.png" class="icon"></image>
+        <view class="item">
+          <text>资质上传</text>
           <image src="../../../images/my-arrow.png" class="item-arrow"></image>
         </view>
       </view>
@@ -88,19 +96,11 @@
 
   <!--second part begin  -->
   <view class="mine" style='margin-top:10pt;' wx:if="{{person}}">
-    <navigator url="../qualifyUpload/qualifyUpload">
-      <view class="list">
-        <image src="../../../images/my-b.png" class="icon"></image>
-        <view class="item">
-          <text>资质上传</text>
-          <image src="../../../images/my-arrow.png" class="item-arrow"></image>
-        </view>
-      </view>
-    </navigator>
+
 
     <navigator bindtap='zhanweiupload'>
       <view class="list">
-        <image src="../../../images/my-b.png" class="icon"></image>
+        <image src="../../../images/personal_icon_zwsc.png" class="icon"></image>
         <view class="item">
           <text>展位上传</text>
           <image src="../../../images/my-arrow.png" class="item-arrow"></image>
@@ -108,9 +108,9 @@
       </view>
     </navigator>
 
-    <navigator url="../productUpload/productUpload">
+    <navigator  bindtap='productUpload'>
       <view class="list">
-        <image src="../../../images/my-b.png" class="icon"></image>
+        <image src="../../../images/personal_icon_cpsc.png" class="icon"></image>
         <view class="item">
           <text>产品上传</text>
           <image src="../../../images/my-arrow.png" class="item-arrow"></image>
@@ -122,7 +122,7 @@
   <!--second part over  -->
 
   <!--footer info begin-->
-  <view class="footer-info">
+  <!-- <view class="footer-info">
     <view class="erweima">
       <image src="../../../images/erweima.png"></image>
     </view>
@@ -137,7 +137,7 @@
     <view wx:if="{{showInfo}}" class="infoView">
       <text>成都子奇科技有限公司提供技术支持</text>
     </view>
-  </view>
+  </view> -->
 
   <!--footer info over-->
 </view>

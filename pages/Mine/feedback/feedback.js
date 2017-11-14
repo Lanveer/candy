@@ -67,8 +67,8 @@ Page({
     var params={
       // items: that.data.chosedContent.join(),
       // suggestions: that.data.suggestions,
-      userName: that.data.userName,
-      userPhoneNumber: that.data.userPhoneNumber,
+      user_name: that.data.userName,
+      tel: that.data.userPhoneNumber,
       content: that.data.chosedContent.join().concat(that.data.suggestions)
     };
     console.log(params)

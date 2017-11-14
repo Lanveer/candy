@@ -1,5 +1,6 @@
 /* pages/Exhibition/Exhibition/exhibition.wxss */
 @import "../../template_regist/regist.wxss";
+
 .container {
   width: 750rpx;
   height: auto;
@@ -14,9 +15,9 @@
   width: 358rpx;
   height: 70rpx;
   border-radius: 40rpx;
-  border-color: #FFE8E6;
-  border: 2rpx solid #FFE8E6;
-  background: #FFFFFF;
+  border-color: #ffe8e6;
+  border: 2rpx solid #ffe8e6;
+  background: #fff;
   margin-top: -30rpx;
   display: flex;
   flex-direction: column;
@@ -27,7 +28,7 @@
 .searchContainer {
   width: 260rpx;
   height: 70rpx;
-  background: #FFFFFF;
+  background: #fff;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -40,19 +41,23 @@
 
 .searchTitle {
   font-size: 24rpx;
-  color: #999999;
+  color: #999;
 }
 
 /*Banner*/
-.banner{
-    width: 750rpx;height:392rpx;
+
+.banner {
+  width: 750rpx;
+  height: 392rpx;
 }
-.banner swiper{
-   height:392rpx; 
+
+.banner swiper {
+  height: 392rpx;
 }
+
 .banner image {
-    width: 750rpx;
-     height: 100%; 
+  width: 750rpx;
+  height: 100%;
 }
 
 /*顶部分类信息栏*/
@@ -110,19 +115,19 @@
 }
 
 /*酒店 | 展馆 按钮*/
+
 .middleTapBar {
   width: 750rpx;
   height: 20rpx;
-  background: #F1F1F1;
+  background: #f1f1f1;
   display: flex;
   flex-direction: row;
-  
 }
 
 .middleBarItem {
   width: 475rpx;
   height: 66rpx;
-  background: #F1F1F1;
+  background: #f1f1f1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,7 +135,7 @@
 
 .middleBarTitle {
   font-size: 30rpx;
-  color: #666666;
+  color: #666;
   margin: auto;
   text-align: center;
   line-height: 60rpx;
@@ -138,17 +143,17 @@
 
 .middleBarTitleSelected {
   font-size: 30rpx;
-  color: #E82929;
+  color: #e82929;
 }
 
 .middleBarItemLine {
-  background: #F1F1F1;
+  background: #f1f1f1;
   height: 5rpx;
   width: 162rpx;
 }
 
 .middleBarItemLineSelected {
-  background: #E82929;
+  background: #e82929;
   height: 5rpx;
   width: 162rpx;
 }
@@ -156,7 +161,7 @@
 .hotelFrontTitleContainer {
   width: 750rpx;
   height: 88rpx;
-  background: #FFFFFF;
+  background: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -171,123 +176,127 @@
   align-content: center;
 }
 
-.hotelFrontTitleLine{
-    width: 70rpx;
-    height: 2rpx;
-    background: #999999;
-    margin-top: 44rpx;
+.hotelFrontTitleLine {
+  width: 70rpx;
+  height: 2rpx;
+  background: #999;
+  margin-top: 44rpx;
 }
 
-.hotelFrontTitleLineLeft{
-    width: 70rpx;
-    height: 2rpx;
-    background: #999999;
-    margin-top: 44rpx;
-    margin-left: 40rpx;
+.hotelFrontTitleLineLeft {
+  width: 70rpx;
+  height: 2rpx;
+  background: #999;
+  margin-top: 44rpx;
+  margin-left: 40rpx;
 }
 
-.hotelFrontTitleText{
-    font-size: 32rpx;
-    color: #999999;
-    margin-top: 24rpx;
-    margin-left: 24rpx;
-    margin-right: 24rpx;
+.hotelFrontTitleText {
+  font-size: 32rpx;
+  color: #999;
+  margin-top: 24rpx;
+  margin-left: 24rpx;
+  margin-right: 24rpx;
 }
 
 /*test  */
-.test{
+
+.test {
   width: 100%;
   height: 150px;
   background: #ccc;
   white-space: nowrap;
 }
 
-.tags{
-  width: 150px;height: 75px;background: green;
+.tags {
+  width: 150px;
+  height: 75px;
+  background: green;
   margin-right: 10px;
   margin-top: 36px;
   display: inline-block;
 }
+
 /*test  */
 
-
-
 /*酒店滑动页 - 一个酒店*/
+
 .hotelBaseView {
-  /* height: 492rpx; */
-  height:auto;
+  height: auto;
   width: 100%;
   white-space: nowrap;
 }
 
-.scrollViewContainer{
-    /* height: 492rpx; */
-        height:auto;
-     width: 296rpx; 
-      display: flex;
-    flex-direction: column; 
-    overflow: hidden;
-    /* background: green;  */
-    padding-bottom: 10px;
+.scrollViewContainer {
+  height: auto;
+  width: 296rpx;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* background: green; */
 }
 
 .ContainerImage {
-    height: 392rpx;
-    width: 276rpx;
-    /* background: red; */
-    margin-left: 20rpx; 
-    border-radius: 10rpx;
-    position: relative;
-    /* top: 0rpx;
-    left: 0rpx; */
+  height: 392rpx;
+  width: 276rpx;
+  margin-left: 20rpx;
+  border-radius: 10rpx;
+  position: relative;
 }
 
-.ContainerImageView{
-    height: 392rpx;
-    width: 276rpx;
-    /* background: red; */
-    margin-left: 20rpx;
-    border-radius: 10rpx;
-    position: absolute;
+.text {
+  width: 90%;
+  margin: auto;
+  height: 40rpx;
+  /* background: red; */
+  color: #3a4247;
+  line-height: 40rpx;
+  font-size: 10pt;
 }
 
-.ContainerImageTextView{
-    width: 88rpx;
-    height: 36rpx;
-    background: #000000;
-    position: relative;
-    left: 164rpx;
-    bottom: 60rpx;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
+.ContainerImageView {
+  height: 392rpx;
+  width: 276rpx;
+  /* background: red; */
+  margin-left: 20rpx;
+  border-radius: 10rpx;
+  position: absolute;
+}
+
+.ContainerImageTextView {
+  width: 88rpx;
+  height: 36rpx;
+  background: #000;
+  position: relative;
+  left: 164rpx;
+  bottom: 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ContainerImageTextViewFont {
-    font-size: 24rpx;
-    color: #3A4247;
+  font-size: 24rpx;
+  color: #3a4247;
 }
 
-.ContainerDesFont{
-    font-size: 24rpx;
-    color: #3A4247;
-    margin-left: 20rpx;
-     margin-top: 0rpx; 
-    line-height: 10rpx;
+.ContainerDesFont {
+  font-size: 24rpx;
+  color: #3a4247;
+  margin-left: 20rpx;
+  margin-top: 0rpx;
+  line-height: 10rpx;
 }
 
 .hotelContainerView {
-  /* height: 492rpx; */
   height: auto;
-  overflow: hidden;
   width: 750rpx;
+  overflow: hidden;
 }
-
-
 
 .hotelDistanceFont {
   font-size: 20rpx;
-  color: #888888;
+  color: #888;
   margin-left: 30rpx;
   position: absolute;
   top: 26rpx;
@@ -300,7 +309,6 @@
   text-align: left;
   margin-top: 5rpx;
   text-overflow: ellipsis;
-  /*white-space: wrap;*/
   overflow: hidden;
   line-height: 90%;
 }
@@ -317,18 +325,17 @@
   flex-direction: column;
   align-items: center;
   position: absolute;
-  /* bottom: 0rpx;
-  border-radius: 20rpx; */
 }
 
 .locationContainer {
-width:276rpx;
-height:30rpx;
-margin-left:20rpx;
-margin-top: 0rpx;
-margin-top: -15rpx;
-/* flex-direction: column;
-display: flex; */
+  width: 90%;
+  margin: auto;
+  height: 50rpx;
+  /* background: yellow; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
 }
 
 .locationImage {
@@ -337,12 +344,13 @@ display: flex; */
 }
 
 .locationFont {
-  font-size: 20rpx;
+  font-size: 9pt;
   color: #226298;
   margin-left: 10rpx;
 }
 
 /*酒店滑动页 - 多个酒店*/
+
 .moreInfoView {
   width: 618rpx;
   height: 580rpx;
@@ -399,12 +407,12 @@ display: flex; */
   position: absolute;
   bottom: 0rpx;
   left: 0rpx;
-  background: rgba(0, 0, 0, 0.7)
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .smallHotelFont {
   font-size: 22rpx;
-  color: #FFFFFF;
+  color: #fff;
 }
 
 .smallHotelLocationView {
@@ -435,43 +443,43 @@ display: flex; */
   margin-left: 10rpx;
 }
 
-.ExhibitionImageView{
-    width: 750rpx;
-    height: 400rpx;
-    border-radius: 10rpx;
+.ExhibitionImageView {
+  width: 750rpx;
+  height: 400rpx;
+  border-radius: 10rpx;
 }
 
-.ExhibitonImage{
-    width: 708rpx;
-    height: 386rpx;
-    margin-left: 21rpx;
-    border-radius: 10rpx;
-    box-shadow: 0 0 12px rgba(220, 225, 230, 0.7);
+.ExhibitonImage {
+  width: 708rpx;
+  height: 386rpx;
+  margin-left: 21rpx;
+  border-radius: 10rpx;
+  box-shadow: 0 0 12px rgba(220, 225, 230, 0.7);
 }
 
-.LocationView{
-    width: 708rpx;
-    height: 30rpx;
-    /* margin-left: 21rpx; */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    vertical-align: middle;
-    justify-content: space-between;
+.LocationView {
+  width: 708rpx;
+  height: 30rpx;
+  /* margin-left: 21rpx; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: space-between;
 }
 
-.LocationTitle{
-    font-size: 24rpx;
-    color: #3A4247;
-    /* margin-left: 10rpx; */
+.LocationTitle {
+  font-size: 24rpx;
+  color: #3a4247;
+  /* margin-left: 10rpx; */
 }
 
 .ExhibitionlocationContainer {
-    width: auto;
-    height: 40rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  width: auto;
+  height: 40rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .ExhibitionlocationImage {
@@ -485,71 +493,101 @@ display: flex; */
   margin-left: 10rpx;
 }
 
-
-
-.ExhibitionDes{
-    width: 708rpx;
-    height: 400rpx;
+.ExhibitionDes {
+  width: 708rpx;
+  height: auto;
+  overflow: hidden;
 }
 
-.ExhibitionDesFont{
-    font-size: 22rpx;
-    color: #666666;
+.ExhibitionDesFont {
+  font-size: 22rpx;
+  color: #666;
 }
-
-
 
 /*info */
 
 /*page{
     background: #f1f1f1;
 }*/
-#info{
-    width: 100%;height: 1162rpx;
-    background: #fff;
-    position: absolute;top: 0rpx;
-    z-index: 995;
+
+#info {
+  width: 100%;
+  height: 1162rpx;
+  background: #fff;
+  position: absolute;
+  top: 0rpx;
+  z-index: 995;
 }
 
-.info-header{
-    width: 100%;height: 66rpx;background:#e23738;
-    text-align: center;line-height: 66rpx;
+.info-header {
+  width: 100%;
+  height: 66rpx;
+  background: #e23738;
+  text-align: center;
+  line-height: 66rpx;
 }
 
-.info-header text{
-    font-size: 30rpx;color: #fff;
+.info-header text {
+  font-size: 30rpx;
+  color: #fff;
 }
 
-.form-item{
-    width:710rpx;height:auto;
-    margin: 0 auto 40rpx;
-   overflow: hidden; 
-    display: flex;flex-direction: row;
-    align-items: center;vertical-align: middle;
-    justify-content: space-between;
-
-}
-.form-left{font-size: 28rpx;color: #282828;margin-left: 20rpx;}
-.form-left text{color:#e23738;}
-.form-right{
-    width: 530rpx;float: right;margin-right:22rpx;
-}
-.form-right input{
-    width: 100%;height: 68rpx;
-    border: 1rpx solid #dedede;
+.form-item {
+  width: 710rpx;
+  height: auto;
+  margin: 0 auto 40rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: space-between;
 }
 
+.form-left {
+  font-size: 28rpx;
+  color: #282828;
+  margin-left: 20rpx;
+}
 
-.other-right{
-    display: flex;flex-direction: row;align-items: center;vertical-align: middle;justify-content: space-between;
-    font-size: 28rpx;color: #282828;
+.form-left text {
+  color: #e23738;
 }
-.phone-code{
-    width: 300rpx!important;
+
+.form-right {
+  width: 530rpx;
+  float: right;
+  margin-right: 22rpx;
 }
-.get-code{
-    width: 178rpx;font-size: 22rpx;color: #fff;height : 68rpx;background: #e23738;
-    text-align: center;line-height: 68rpx;
+
+.form-right input {
+  width: 100%;
+  height: 68rpx;
+  border: 1rpx solid #dedede;
+}
+
+.other-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #282828;
+}
+
+.phone-code {
+  width: 300rpx !important;
+}
+
+.get-code {
+  width: 178rpx;
+  font-size: 22rpx;
+  color: #fff;
+  height: 68rpx;
+  background: #e23738;
+  text-align: center;
+  line-height: 68rpx;
 }
 
 .get-code-disable {
@@ -562,38 +600,54 @@ display: flex; */
   line-height: 68rpx;
 }
 
-.province{
-    width: 182rpx!important;height: 68rpx;
+.province {
+  width: 182rpx !important;
+  height: 68rpx;
 }
 
-.area{
-    width: 182rpx!important;height: 68rpx;
+.area {
+  width: 182rpx !important;
+  height: 68rpx;
 }
 
-.form-down{
-    width:676rpx;height:250rpx;
-    background:#fff; 
-    margin: 20rpx auto 0; 
+.form-down {
+  width: 676rpx;
+  height: 250rpx;
+  background: #fff;
+  margin: 20rpx auto 0;
 }
+
 /*.check-box{*/
-    /*display: flex;flex-direction: row;justify-content: space-around;align-items: center;vertical-align: middle;*/
+
+/*display: flex;flex-direction: row;justify-content: space-around;align-items: center;vertical-align: middle;*/
+
 /*}*/
-.checkbox{
-    width: 33%;height: auto;
-    margin: 10rpx 0 10rpx 0;
-    text-align: left;font-size:28rpx; 
-    overflow: hidden;display: inline-block;
+
+.checkbox {
+  width: 33%;
+  height: auto;
+  margin: 10rpx 0 10rpx 0;
+  text-align: left;
+  font-size: 28rpx;
+  overflow: hidden;
+  display: inline-block;
 }
 
-.submit{
-    width:676rpx;height: 74rpx;
-    background: #e23738;
-    color: #fff;border: none;outline: none;
-    font-size: 28rpx;border-radius: 0;
-    margin-top: 20rpx;
+.submit {
+  width: 676rpx;
+  height: 74rpx;
+  background: #e23738;
+  color: #fff;
+  border: none;
+  outline: none;
+  font-size: 28rpx;
+  border-radius: 0;
+  margin-top: 20rpx;
 }
 
-.tips{
-    font-size: 22rpx;color:#666565;
-    margin-top: 10rpx;text-align: center;
+.tips {
+  font-size: 22rpx;
+  color: #666565;
+  margin-top: 10rpx;
+  text-align: center;
 }

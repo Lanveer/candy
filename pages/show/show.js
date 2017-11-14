@@ -201,6 +201,16 @@ Page({
     hotelType: '',
   },
 
+  onLoad: function (options) {
+    var that = this;
+    //count_down(that);
+    var itemId = options.itemId;
+    that.setData({
+      itemId: itemId
+    })
+
+  },
+
   // 点击楼层
   change: function (event) {
     var that = this;
@@ -210,7 +220,6 @@ Page({
     var obj = {};
     currentPage = 1;
     didReachEnd = false;
-
     for (var i = 0; i < that.data.floor.length; ++i) {
       key = 'floor[' + i + '].didSelected';
       if (i == index) {
@@ -222,9 +231,7 @@ Page({
       obj[key] = condition;
       that.setData(obj);
     }
-
     that.loadFloorData();
-
   },
 
   locationClicked: function (event) {
@@ -263,16 +270,6 @@ Page({
         // complete
       }
     })
-  },
-
-  onLoad: function (options) {
-    var that = this;
-    count_down(that);
-    var itemId = options.itemId;
-    that.setData({
-      itemId: itemId
-    })
-
   },
   onReady: function () {
     // 页面渲染完成
@@ -365,13 +362,15 @@ Page({
         },
         method: 'GET',
         success: function (res) {
-          if (res.data.data.length < 20) {
+          if (res.data.data.content.length < 10) {
             didReachEnd = true;
+            console.log('reach end...')
           } else {
             didReachEnd = false;
+            console.log('not reach end...')
           }
 
-          if (res.data.data.length > 0) {
+          if (res.data.data.content.length > 0) {
             var totalData = that.data.floorExhibitionData
             that.setData({
               floorExhibitionData: totalData.concat(res.data.data.content)
@@ -413,13 +412,11 @@ Page({
       data: {
         eh_id: that.data.itemId,
         floor: currentFloor,
-        page: currentPage
+        page: currentPage,
+        hidden:1
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      method: 'GET',
       success: function (res) {
-        // success
-        // if (res.data.length > 0) {
         if (res.data.data.length == 0) {
           wx.showModal({
             title: '暂时没有展位数据，小编正在努力中',
@@ -437,10 +434,7 @@ Page({
           that.setData({
             floorExhibitionData: res.data.data.content
           })
-          console.log(that.data.floorExhibitionData);
         }
-        // }
-
       },
       fail: function () {
         // fail
@@ -466,8 +460,9 @@ Page({
     var that = this;
     that.showLoading()
     wx.request({
-      url: app.globalData.host + 'exhibitionHotel/' + that.data.itemId,
+      url: app.globalData.host + 'v2/wechat.exhibition_hotel/read',
       data: {
+        id:that.data.itemId,
         lat: app.globalData.latitude,
         lng: app.globalData.longitude,
         booth_count: 1,
@@ -476,6 +471,7 @@ Page({
       },
       method: 'GET', 
       success: function (res) {
+          console.log(res)
         // success
         var tempFloor = res.data.data.format_floors;
         that.setData({
@@ -522,7 +518,8 @@ Page({
       data: {
         eh_id: that.data.itemId,
         floor: 1,
-        page: 1
+        page: 1,
+        hidden:1
       },
       method: 'GET',
       success: function (res) {

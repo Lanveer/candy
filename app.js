@@ -19,11 +19,12 @@ App({
           method:'post',
           data:location,
           success:function(res){
+            console.log(res)
             if(res.data.code!=0){
-              wx.showModal({
-                title: '提示',
-                content: '提交设备信息出错',
-              })
+                //   wx.showModal({
+                //     title: '提示',
+                //     content: '提交设备信息出错',
+                //   })
             }else{
               // 提交设备信息成功
             }
@@ -49,11 +50,14 @@ App({
             if (res.data.code != 0) {
               that.globalData.didFillinInfo = false;
             } else {
-              // that.globalData.didFillinInfo = false;
+            //   that.globalData.didFillinInfo = false;
               that.globalData.didFillinInfo = true;
               var userInfo = res.data.data;
               wx.setStorageSync('userInfo', userInfo);
             }
+          },
+          fail:function(err){
+            console.log(err)
           }
         })
       }
@@ -121,8 +125,8 @@ App({
     header: '',
     nick_name: '',
     open: '',
-    host: "https://tjh.xtype.cn/"
-    // host: "https://tjh-min.jiushang.cn/"
+    // host: "https://tjh.xtype.cn/",
+    host: "https://tjh-min.jiushang.cn/"
   },
   show_window: function () {
     // console.log('在这里将调用app中展示函数！')

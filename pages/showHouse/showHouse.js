@@ -75,48 +75,48 @@ Page({
     // 列表数据
     floorExhibitionData: [
     ],
-    list_data: [
-      {
-        title: '中粮神酒',
-        url: '../../images/show1.png',
-        tip: '会展中心',
-        floor: '一层-24号',
-        contacts: '陈经理',
-        tel: '1545676235',
-        tag: [{ val: '白酒1' }, { val: '红酒1' }, { val: '黑酒1' }],
-        didSelected: true
-      },
-      {
-        title: '中粮深究',
-        url: '../../images/show1.png',
-        tip: '会展中心',
-        floor: '二层-24号',
-        contacts: '章经理',
-        tel: '1545676235',
-        tag: [{ val: '白酒2' }, { val: '红酒2' }, { val: '黑酒2' }],
-        didSelected: false
-      },
-      {
-        title: '中粮深究',
-        url: '../../images/show1.png',
-        tip: '会展中心',
-        floor: '二层-24号',
-        contacts: '章经理',
-        tel: '1545676235',
-        tag: [{ val: '白酒2' }, { val: '红酒2' }, { val: '黑酒2' }],
-        didSelected: false
-      },
-      {
-        title: '中粮深究',
-        url: '../../images/show1.png',
-        tip: '会展中心',
-        floor: '二层-24号',
-        contacts: '章经理',
-        tel: '1545676235',
-        tag: [{ val: '白酒2' }, { val: '红酒2' }, { val: '黑酒2' }],
-        didSelected: false
-      }
-    ],
+    // list_data: [
+    //   {
+    //     title: '中粮神酒',
+    //     url: '../../images/show1.png',
+    //     tip: '会展中心',
+    //     floor: '一层-24号',
+    //     contacts: '陈经理',
+    //     tel: '1545676235',
+    //     tag: [{ val: '白酒1' }, { val: '红酒1' }, { val: '黑酒1' }],
+    //     didSelected: true
+    //   },
+    //   {
+    //     title: '中粮深究',
+    //     url: '../../images/show1.png',
+    //     tip: '会展中心',
+    //     floor: '二层-24号',
+    //     contacts: '章经理',
+    //     tel: '1545676235',
+    //     tag: [{ val: '白酒2' }, { val: '红酒2' }, { val: '黑酒2' }],
+    //     didSelected: false
+    //   },
+    //   {
+    //     title: '中粮深究',
+    //     url: '../../images/show1.png',
+    //     tip: '会展中心',
+    //     floor: '二层-24号',
+    //     contacts: '章经理',
+    //     tel: '1545676235',
+    //     tag: [{ val: '白酒2' }, { val: '红酒2' }, { val: '黑酒2' }],
+    //     didSelected: false
+    //   },
+    //   {
+    //     title: '中粮深究',
+    //     url: '../../images/show1.png',
+    //     tip: '会展中心',
+    //     floor: '二层-24号',
+    //     contacts: '章经理',
+    //     tel: '1545676235',
+    //     tag: [{ val: '白酒2' }, { val: '红酒2' }, { val: '黑酒2' }],
+    //     didSelected: false
+    //   }
+    // ],
     feed: [
       {
         title: '白酒',
@@ -198,29 +198,31 @@ Page({
   change: function (event) {
     var that = this;
     var index = event.currentTarget.dataset.index;
+    var ids = event.currentTarget.dataset.id;
+    var name = event.currentTarget.dataset.name;
     var key = '';
     var condition = true;
     var obj = {};
     currentPage = 1;
     didReachEnd = false;
-
+    that.setData({
+      exhibitionTag: name
+    })
     for (var i = 0; i < that.data.floor.length; ++i) {
       key = 'floor[' + i + '].didSelected';
       if (i == index) {
         condition = true;
         currentFloor = that.data.floor[i].id;
-        that.setData({
-          exhibitionTag: that.data.floor[i].tag
-        })
+        // that.setData({
+        //   exhibitionTag: that.data.floor[i].tag
+        // })
       } else {
         condition = false;
       }
       obj[key] = condition;
       that.setData(obj);
     }
-
-    that.loadFloorData();
-
+    that.loadFloorData(ids);
   },
 
   // 点击搜索栏
@@ -246,7 +248,7 @@ Page({
     that.setData({
       itemId: itemId
     })
-    count_down(that);
+    //count_down(that);
   },
   onReady: function () {
     // 页面渲染完成
@@ -268,75 +270,82 @@ Page({
     // 页面关闭
   },
 
+  list_clicked: function (event) {
+    // 用户行为统计
+    var name = event.currentTarget.dataset.name;
+    app.userAct('展位', name)
+
+    wx.navigateTo({
+      url: '../exhibitionPos/exhibitionPos?itemId=' + event.currentTarget.dataset.index,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
   loadData: function (event) {
     var that = this;
     that.showLoading()
     wx.request({
-        // url: 'http://tjh.xtype.cn/exhibitionHotel/'+that.data.itemId ,
-        url: app.globalData.host +'v2/wechat.exhibition_hotel/read',
-        data: {
-            lat: app.globalData.latitude,
-            lng: app.globalData.longitude,
-            booth_count: 1,
-            back_distance: 1,
-            format_floors: 1,
-            id: that.data.itemId
-        },
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
-        success: function (res) {
-            // success
-            console.log(res)
-            var tempFloor = res.data.data.format_floors;
-            // for (var i = 0; i < tempFloor.length; ++i) {
-            //     var str1 = tempFloor[i] + '层';
-            //     var key1 = 'floor[' + i + '].detail';
-            //     var str2 = false;
-            //     var key2 = 'floor[' + i + '].didSelected';
-            //     var str3 = tempFloor[i]
-            //     var key3 = 'floor[' + i + '].id';
-            //     var obj = {};
+      url: app.globalData.host + 'v2/wechat.exhibition_hotel/read',
+      data: {
+        lat: app.globalData.latitude,
+        lng: app.globalData.longitude,
+        booth_count: 1,
+        back_distance: 1,
+        format_floors: 1,
+        id: that.data.itemId
+      },
+      method: 'GET',
+      success: function (res) {
 
-            //     obj[key1] = str1;
-            //     obj[key2] = str2;
-            //     obj[key3] = str3;
-            //     that.setData(obj);
+        console.log(res)
+        var tempFloor = res.data.data.format_floors;
+        // for (var i = 0; i < tempFloor.length; ++i) {
+        //     var str1 = tempFloor[i] + '层';
+        //     var key1 = 'floor[' + i + '].detail';
+        //     var str2 = false;
+        //     var key2 = 'floor[' + i + '].didSelected';
+        //     var str3 = tempFloor[i]
+        //     var key3 = 'floor[' + i + '].id';
+        //     var obj = {};
 
-            // }
+        //     obj[key1] = str1;
+        //     obj[key2] = str2;
+        //     obj[key3] = str3;
+        //     that.setData(obj);
+        // }
 
-            that.setData({
-                name: res.data.data.name,
-                introduce: res.data.data.introduce,
-                logo: res.data.data.logo,
-                address: res.data.data.address,
-                lat: res.data.data.lat,
-                lng: res.data.data.lng,
-                boothnum: res.data.data.booth_count,
-                distance: res.data.data.distance,
-                floor: tempFloor
+        that.setData({
+          name: res.data.data.name,
+          introduce: res.data.data.introduce,
+          logo: res.data.data.logo,
+          address: res.data.data.address,
+          lat: res.data.data.lat,
+          lng: res.data.data.lng,
+          boothnum: res.data.data.booth_count,
+          distance: res.data.data.distance,
+          floor: tempFloor
+        })
 
-            })
+      },
+      fail: function () {
+        // fail
+        that.hideLoading()
+        wx.showModal({
+          title: '加载酒店信息失败，请重试',
+          content: '',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+            }
+          }
+        })
 
-
-        },
-        fail: function () {
-            // fail
-            that.hideLoading()
-            wx.showModal({
-                title: '加载酒店信息失败，请重试',
-                content: '',
-                showCancel: false,
-                success: function (res) {
-                    if (res.confirm) {
-                    }
-                }
-            })
-
-        },
-        complete: function () {
-            // complete
-            // that.hideLoading()
-        }
+      },
+      complete: function () {
+        // complete
+        // that.hideLoading()
+      }
     })
 
     currentPage = 1;
@@ -344,79 +353,83 @@ Page({
     currentFloor = 1;
 
     wx.request({
-        // url: 'http://tjh.xtype.cn/booth',
-        url: app.globalData.host +'v2/wechat.booth/index',
-        data: {
-            eh_id: that.data.itemId,
-            floor: 1,
-            page: 1
-        },
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
-        success: function (res) {
-            // success
-            if (res.data.data.length == 0) {
-                wx.showModal({
-                    title: '暂时没有展位数据，小编正在努力中',
-                    content: '',
-                    showCancel: false,
-                    success: function (res) {
-                        if (res.confirm) {
-                        }
-                    }
-                })
-                that.setData({
-                    list_data: ""
-                })
-            } else {
-                that.setData({
-                    list_data: res.data.data.content
-                })
-            }
-        },
-        fail: function () {
-            // fail
-            that.hideLoading()
-            wx.showModal({
-                title: '加载展位信息失败，请重试',
-                content: '',
-                showCancel: false,
-                success: function (res) {
-                    if (res.confirm) {
-                    }
-                }
-            })
-        },
-        complete: function () {
-            // complete
-            that.hideLoading()
+      url: app.globalData.host + 'v2/wechat.booth/index',
+      data: {
+        eh_id: "ZY",
+        floor: 'ZY',
+        page: 1,
+        type: 2
+      },
+      method: 'GET',
+      success: function (res) {
+        console.log(res);
+
+        if (res.data.code != 0) {
+          wx.showModal({
+            title: '提示',
+            content: res.data.msg,
+            showCancel: false
+          })
+          that.setData({
+            list_data: ""
+          })
+        } else {
+          that.setData({
+            list_data: res.data.data.content
+          })
         }
+      },
+      fail: function () {
+        // fail
+        that.hideLoading()
+        wx.showModal({
+          title: '加载展位信息失败，请重试',
+          content: '',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+            }
+          }
+        })
+      },
+      complete: function () {
+        // complete
+        that.hideLoading()
+      }
     })
   },
-
   loadFloorData: function (event) {
+    var ids = event;
     var that = this;
     currentPage = 1;
     didReachEnd = false;
     that.showLoading()
     wx.request({
-      url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/exhibitionHotelBoothList',
+      url: app.globalData.host + 'v2/wechat.booth/index',
       data: {
-        id: that.data.itemId,
+        eh_id: that.data.itemId,
+        hidden: 1,
         floor: currentFloor,
         page: currentPage
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
+      method: 'GET',
       success: function (res) {
         // success
         console.log(res);
-        // if (res.data.length > 0) {
-        that.setData({
-            list_data: res.data
-        })
-
-        // }
+        if (res.data.code !== 0) {
+          wx.showModal({
+            title: '提示',
+            content: res.data.msg,
+            showCancel: false
+          })
+          that.setData({
+            list_data: ""
+          })
+        } else {
+          that.setData({
+            list_data: res.data.data.content
+          })
+        }
         that.hideLoading()
       },
       fail: function () {
@@ -446,27 +459,26 @@ Page({
       currentPage += 1;
       that.showLoading()
       wx.request({
-        url: 'https://min.jiushang.cn/index.php/index/Exhibitionhotelapi/exhibitionHotelBoothList',
+        url: app.globalData.host + 'v2/wechat.booth/index',
         data: {
           id: that.data.itemId,
           floor: currentFloor,
           page: currentPage
         },
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
+        method: 'GET',
         success: function (res) {
           // success
           console.log(res);
-          if (res.data.length < 20) {
+          if (res.data.data.content.length < 10) {
             didReachEnd = true;
           } else {
             didReachEnd = false;
           }
 
-          if (res.data.length > 0) {
-              var totalData = that.data.list_data
+          if (res.data.data.content.length > 0) {
+            var totalData = that.data.list_data
             that.setData({
-                list_data: totalData.concat(res.data)
+              list_data: totalData.concat(res.data.data.content)
             })
           }
           that.hideLoading()

@@ -11,7 +11,7 @@
   <view class="banner">
     <swiper indicator-dots="true" autoplay="true">
       <block wx:for="{{banner}}">
-        <swiper-item  bindtap="bannerTap" data-id="{{item.id}}">
+        <swiper-item bindtap="bannerTap" data-id="{{item.id}}">
           <image src="{{item.covers[0]}}"></image>
         </swiper-item>
       </block>
@@ -59,23 +59,19 @@
   <view class="hotelContainerView">
     <scroll-view class="hotelBaseView" scroll-x="true" bindChange="bindChange">
       <block wx:for="{{hotelData}}">
+      
         <view class="scrollViewContainer" style='display:inline-block;' bindtap='bigHotelClicked' data-index="{{item.id}}" data-name="{{item.name}}">
-          <image class="ContainerImage" src="{{item.logo}}">
-            <!-- <text class="ContainerImageTextViewFont">ddd</text> -->
-          </image>
-
-
-          <view style='margin-top:-10rpx;'>
-            <text class="ContainerDesFont">{{item.name}}</text>
-          </view>
-
+          <image class="ContainerImage" src="{{item.logo}}"></image>
+          <view class='text'>{{item.name}}</view>
           <view class="locationContainer" catchtap='smallLocationClicked' data-lat="{{item.lat}}" data-lng="{{item.lng}}" data-name="{{item.name}}" data-location="{{item.address}}">
-
             <image class="locationImage" src='../../../images/location@2x.png'></image>
             <text class="locationFont">{{item.address}}</text>
           </view>
         </view>
+
+
       </block>
+
     </scroll-view>
 
 

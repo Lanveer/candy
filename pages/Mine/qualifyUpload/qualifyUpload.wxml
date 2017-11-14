@@ -24,12 +24,12 @@
     </view>
   </view>
 
-    <view class='box item' style='padding-top:50rpx;' >
-    <input class='input' placeholder='请输入身份证号码' placeholder-class='pl' name='cardNum' type='number' maxlength='18'></input>
-  </view>
+    <!-- <view class='box item' style='padding-top:50rpx;' >
+    <input class='input' placeholder='请输入身份证号码' placeholder-class='pl' name='cardNum' type='text' maxlength='18'></input>
+  </view> -->
 
     <view class='box item' style='padding-top:50rpx;' style='border-top:none;'>
-    <input class='input' placeholder='请输入公司名称' placeholder-class='pl' name='companyName' type='number' maxlength='18'></input>
+    <input class='input' placeholder='请输入公司名称' placeholder-class='pl' name='companyName' type='text' maxlength='18'></input>
   </view>
 
   <button formType="submit">提交</button>

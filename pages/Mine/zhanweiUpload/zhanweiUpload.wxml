@@ -51,7 +51,7 @@
   </view>
 
   <!--选择时间  -->
-  <picker mode="date" value="{{date}}" start="2017-10-01" end="2019-09-01" bindchange="startTime" style='padding-top:50rpx;'>
+  <!-- <picker mode="date" value="{{date}}" start="2017-10-01" end="2019-09-01" bindchange="startTime" style='padding-top:50rpx;'>
     <view class="picker">
       开始时间:
       <view class='hotelName'>{{starTime}}</view>
@@ -64,20 +64,20 @@
       结束时间:
       <view class='hotelName'>{{endTime}}</view>
     </view>
-  </picker>
+  </picker> -->
 
   <!--选择时间  -->
 
 
   <!--是否热门开始  -->
-  <view class="picker" style='margin-top:50rpx;'>
+  <!-- <view class="picker" style='margin-top:50rpx;'>
     是否热门:
     <radio-group bindchange="radioChange" style='margin-left:10px;;'>
       <label wx:for="{{items}}">
         <radio value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
       </label>
     </radio-group>
-  </view>
+  </view> -->
 
   <!--是否热门结束  -->
 

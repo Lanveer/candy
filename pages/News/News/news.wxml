@@ -48,8 +48,8 @@
           <image class="normalNewsImage" src="{{item.covers[0]}}"></image>
           <view class="normalNewsTitleView">
             <text class="normalNewsTitleFont">{{item.name}}</text>
-            <view class="normalNewsIconView">
-              <text class="normalNewsIconFont">{{item.bottomTitle}}</text>
+            <view class="normalNewsIconView" wx:if="{{item.is_top==1}}">
+                <text class="zd">置顶</text> 
             </view>
           </view>
         </view>
@@ -107,8 +107,8 @@
           <image class="normalNewsImage" src="{{item.covers[0]}}"></image>
           <view class="normalNewsTitleView">
             <text class="normalNewsTitleFont">{{item.name}}</text>
-            <view class="normalNewsIconView">
-              <text class="normalNewsIconFont">{{item.bottomTitle}}</text>
+              <view class="normalNewsIconView" wx:if="{{item.is_top==1}}">
+                <text class="zd">置顶</text> 
             </view>
           </view>
         </view>
@@ -116,10 +116,10 @@
 
       <!--视频资讯-->
       <view wx:if="{{ item.type == 5}}" class="videoNewsView" bindtap="videoNewsClicked" data-id="{{item.id}}" data-item-type="{{item.type}}">
-          <text class="videoNewsTitleFont">{{item.name}}</text>
+        <text class="videoNewsTitleFont">{{item.name}}</text>
         <view class="videoNewsContainer">
           <image class="videoNewsImage" src="{{item.covers[0]}}"></image>
-        
+
           <view class="videoNewsIconView">
             <text class="videoNewsIconFont">{{item.time}}</text>
           </view>

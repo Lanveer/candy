@@ -41,15 +41,14 @@ Page({
       return;
     }
 
-
-
-    if (e.detail.value.cardNum == '' || e.detail.value.cardNum.length < 18) {
-      wx.showModal({
-        title: '提示',
-        content: '请按照规则填写身份证',
-      })
-      return;
-    }
+//不需要身份证信息
+    // if (e.detail.value.cardNum == '' || e.detail.value.cardNum.length < 18) {
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: '请按照规则填写身份证',
+    //   })
+    //   return;
+    // }
 
     if (e.detail.value.companyName == '') {
       wx.showModal({
@@ -63,12 +62,12 @@ Page({
 
     var params = {
       companyName: e.detail.value.companyName,
-      cardNum: e.detail.value.cardNum,
+    //   cardNum: e.detail.value.cardNum,
       token: that.data.userInfo.token,
       companyLicenceUrl: that.data.companyLicenceUrl,
       personCardImageUrl: that.data.personCardImageUrl
     }
-
+ console.log(params)
     wx.request({
       url: app.globalData.host + 'v2/wechat.user/aptitudeauth',
       method: 'post',
@@ -76,14 +75,32 @@ Page({
       data: params,
       success: function (res) {
         if (res.data.code != 0) {
-          wx.showToast({
-            title: res.data.msg,
+          wx.showModal({
+            title: '提示',
+            content: res.data.msg,
+            success: function (res) {
+              if (res.confirm) {
+              //  wx.navigateBack(1)
+              }
+            }
           })
+
         } else {
-          wx.showToast({
-            title: '上传成功'
-          });
-          wx.navigateBack(1);
+            wx.showModal({
+                title: '提示',
+                content: '恭喜，资质审核成功！',
+                showCancel:false,
+                success: function (res) {
+                    if (res.confirm) {
+                        //  wx.navigateBack(1)
+                        wx.reLaunch({
+                            url: '../Mine/mine',
+                        })
+                    }
+                }
+            })
+
+        //   wx.navigateBack(1);
         }
       }
 
@@ -160,6 +177,9 @@ Page({
       sizeType: ['original', 'compressed'],
       sourceType: [type],
       success: function (res) {
+          wx.showLoading({
+              title: '上传中...',
+          })
         that.setData({
           enterPrice: res.tempFilePaths[0],
         })
@@ -175,10 +195,22 @@ Page({
             'file': file
           },
           success: function (res) {
+              wx.hideLoading();
             var obj = JSON.parse(res.data);
             console.log(obj.data.url)
             that.setData({
               companyLicenceUrl: obj.data.url
+            })
+          },
+          fail:function(err){
+            wx.hideLoading();
+            that.setData({
+              enterPrice: ''
+            })
+            wx.showModal({
+              title: '提示',
+              content: '网络错误,请重新上传',
+              showCancel:false
             })
           }
         })
@@ -208,6 +240,9 @@ Page({
       sizeType: ['original', 'compressed'],
       sourceType: [type],
       success: function (res) {
+          wx.showLoading({
+              title: '上传中...',
+          })
         that.setData({
           idcard: res.tempFilePaths[0],
         })
@@ -223,10 +258,22 @@ Page({
             'file': file
           },
           success: function (res) {
+              wx.hideLoading();
             var obj = JSON.parse(res.data);
             console.log(obj.data.url)
             that.setData({
               personCardImageUrl: obj.data.url
+            })
+          },
+          fail: function (err) {
+            wx.hideLoading();
+            that.setData({
+              idcard: ''
+            })
+            wx.showModal({
+              title: '提示',
+              content: '网络错误,请重新上传',
+              showCancel: false
             })
           }
         })

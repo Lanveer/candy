@@ -16,6 +16,7 @@
   position: fixed;
   top: -1rpx;
   z-index: 2;
+
 }
 ::-webkit-scrollbar{
   display: none;
@@ -28,6 +29,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+    /* background: red; */
 }
 
 .topBarTitle {
@@ -131,10 +133,13 @@
   align-items: center;
 }
 
-.topNewsIconFont {
+.zd {
+  width: 80rpx;height: 40rpx;
+  background:#ffcd4d;
   font-size: 24rpx;
   color: #FFFFFF;
   line-height: 40rpx;
+  text-align: center;
 }
 
 /*一般资讯*/
@@ -171,16 +176,16 @@
 .normalNewsTitleFont {
   font-size: 34rpx;
   color: #353535;
-  position: absolute;
+  /* position: absolute;
   top: 0rpx;
-  left: 0rpx;
+  left: 0rpx; */
 }
 
 .normalNewsIconView {
   width: auto;
   height: 40rpx;
   position: absolute;
-  left: 0rpx;
+  right: 10rpx;
   bottom: 0rpx;
   display: flex;
   flex-direction: column;
@@ -213,7 +218,7 @@
 
 .imagesNewsTitleView {
   width: 710rpx;
-  height: 76rpx;
+  height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -222,7 +227,7 @@
 .imagesNewsTitleFont {
   font-size: 34rpx;
   color: #353535;
-  line-height: 76rpx;
+  padding-top: 10rpx;
   padding-bottom: 10rpx;
 }
 
@@ -338,7 +343,7 @@
 
 .bigImageNewsTitleView {
   width: 710rpx;
-  height: 76rpx;
+  height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -347,7 +352,9 @@
 .bigImageNewsTitleFont {
   font-size: 34rpx;
   color: #383838;
-  line-height: 76rpx;
+  /* line-height: 76rpx; */
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
 }
 
 .bigImageNewsImage {

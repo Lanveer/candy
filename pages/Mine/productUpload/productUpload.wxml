@@ -35,17 +35,45 @@
   <!--选择类型  -->
 
 
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' placeholder='请输入香型' placeholder-class='pl' name='xiangxing'></input>
+  </view>
+
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' placeholder='请输入度数' placeholder-class='pl' name='dushu'></input>
+  </view>
+
+
+   <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' placeholder='请输入产地' placeholder-class='pl' name='chandi'></input>
+  </view>
+
+
+  <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' placeholder='请输入净含量' placeholder-class='pl' name='jinghanliang'></input>
+  </view>
+
+    <view class='box item' style='padding-top:50rpx;'>
+    <input class='input' placeholder='请输入厂址' placeholder-class='pl' name='changzhi'></input>
+  </view>
+
   <!-- <view class='box item' style='padding-top:50rpx;'>
-    <input class='input' placeholder='请输入产地' placeholder-class='pl'></input>
-  </view>
+    <textarea placeholder='输入介绍' placeholder-class='pl' name='jieshao'></textarea>
+  </view>  -->
+
 
   <view class='box item' style='padding-top:50rpx;'>
-    <input class='input' placeholder='请输入厂址' placeholder-class='pl'></input>
+    <view class='title'>详情图:</view>
+    <view class='upload'>
+      <view class='upload-box'>
+        <image src='{{detail}}'></image>
+      </view>
+      <view class='btn' bindtap='chooseImageTap2'>上传</view>
+    </view>
   </view>
 
-  <view class='box item' style='padding-top:50rpx;'>
-    <textarea placeholder='输入介绍' placeholder-class='pl'></textarea>
-  </view> -->
 
   <button formType="submit">提交</button>
 

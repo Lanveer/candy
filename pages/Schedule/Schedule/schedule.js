@@ -15,7 +15,7 @@ Page({
       {
         pageId: "1",
         title: "3月19日",
-        didSelected: true
+        didSelected: false
       },
       {
         pageId: "2",
@@ -149,7 +149,7 @@ Page({
         that.setData({
           windowHeight: res.windowHeight
         })
-        console.log("屏幕高度: " + res.windowHeight)
+
       }
     })
     // 获取code信息
@@ -158,12 +158,28 @@ Page({
       codeInfo: codeInfo
     })
 
-    // 获取推广信息
-    var phone= options.phone
-    that.setData({
-      phone:phone
+    //获取code信息---这里的code需要从新获取
+    wx.login({
+      success: function (res) {
+        console.log(res.code)
+        that.setData({
+          newCode: res.code
+        })
+      }
     })
 
+    // 获取推广信息
+    var phone= wx.getStorageSync('phone')
+    that.setData({
+      phone:phone
+    });
+
+    // 获取经纬度
+    var location = wx.getStorageSync('location');
+    that.setData({
+      longitude: location.longitude,
+      latitude: location.latitude
+    })
 
 
     that.showLoading();
@@ -197,12 +213,11 @@ Page({
             })
           }
         }
-
+        var firstId = that.data.topTabBarData[0].pageId;
         wx.request({
           url: app.globalData.host + '/v2/wechat.agenda/index',
           data: {
-            // cate: that.data.toView,
-            page_id:0,
+            page_id: firstId,
             page: '1'
           },
           method: 'GET', 
@@ -310,18 +325,28 @@ Page({
           method: 'GET', 
           success: function (res) {
             // success
-            console.log('wedwede:'+res);
-            if (res.data.length < 20) {
+            if (res.data.data != '' && res.data.data.content.length < 10) {
               didReachEnd = true;
             } else {
               didReachEnd = false;
             }
 
-            if (res.data.length > 0) {
+            if (res.data.data != '' && res.data.data.content.length > 0) {
               var totalData = that.data.scheduleData
               that.setData({
-                scheduleData: totalData.concat(res.data)
+                scheduleData: totalData.concat(res.data.data.content)
               })
+            } else {
+                wx.showModal({
+                    title: '提示',
+                    content: '没有更多了',
+                    showCancel: false,
+                    success: function (res) {
+                        if (res.confirm) {
+                            // wx.navigateBack(1)
+                        }
+                    }
+                })
             }
             that.hideLoading()
           },
@@ -418,7 +443,6 @@ Page({
       loadingHidden: true
     })
   },
-
   // 日期选择响应函数
   topBarItemClicked: function (event) {
     var that = this;
@@ -428,7 +452,6 @@ Page({
     var obj = {};
     var itemId;
     isHotNews = false
-
     for (var i = 0; i < that.data.topTabBarData.length; ++i) {
       key = 'topTabBarData[' + i + '].didSelected';
       if (i == index) {
@@ -456,6 +479,9 @@ Page({
       success: function (res) {
         console.log(res)
         if (res.data.data.length == 0) {
+          that.setData({
+            scheduleData:''
+          })
           wx.showModal({
             title: '当前日程暂无数据，小编正在努力中',
             content: '',
@@ -544,26 +570,24 @@ Page({
       obj[key] = condition;
       that.setData(obj);
     }
-
     that.showLoading()
     wx.request({
       url: app.globalData.host + '/v2/wechat.agenda/index',
       data: {
-        cate: todayId,
+        // cate: todayId,
         hot: '1',
         page_id: '0'
       },
       method: 'GET', 
       success: function (res) {
         if(res.data.code!=0){
-
         }else{
           console.log(res)
           that.setData({
             scheduleData: res.data.data.content
           })
         }
-  
+
         // }topBarItemClicked
         that.hideLoading()
       },
@@ -707,14 +731,14 @@ Page({
       })
       return false
     }
-    if (e.detail.value.email == '') {
-      wx.showModal({
-        title: '错误',
-        content: '邮箱不能为空！',
-        showCancel: false,
-      })
-      return false
-    }
+    // if (e.detail.value.email == '') {
+    //   wx.showModal({
+    //     title: '错误',
+    //     content: '邮箱不能为空！',
+    //     showCancel: false,
+    //   })
+    //   return false
+    // }
     if (e.detail.value.code == '') {
       wx.showModal({
         title: '错误',
@@ -744,22 +768,28 @@ Page({
       nick_name: app.globalData.nick_name,
       tel: e.detail.value.tel,
       password: e.detail.value.password,
-      opencode: that.data.codeInfo,
+      opencode: that.data.newCode,
       header: app.globalData.header,
       code: e.detail.value.code,
-      email: e.detail.value.email,
-      identity: that.data.identity.join(),
+      email: e.detail.value.tel + '@jiushang.cn',
+      identity: that.data.identity,
       tags: that.data.tags,
       customer_number: e.detail.value.customer_number,
-      qrcode:that.data.phone
+      qrcode:that.data.phone,
+      longitude: that.data.longitude,
+      latitude: that.data.latitude
     }
+    console.log(params);
+    wx.showLoading({
+      title: '加载中...',
+    })
     wx.request({
       url: app.globalData.host + 'v2/wechat.sign/up',
       method: 'POST',
       header: { "Content-Type": "application/x-www-form-urlencoded" },
       data: params,
       success: function (res) {
-        console.log(res)
+       wx.hideLoading();
         if (res.data.code != 0) {
           wx.showModal({
             title: '注册失败',
@@ -776,7 +806,11 @@ Page({
             showCancel: false,
             success: function (res) {
               if (res.confirm) {
-                wx.navigateBack(1);
+                // wx.navigateBack(1);
+
+                  that.setData({
+                      needshowInfo: false
+                  })
                 app.globalData.didFillinInfo = true;
                 wx.setStorage({
                   key: 'didFillinInfo',
@@ -1054,7 +1088,7 @@ function count_down(that) {
     // 放在最后--
     total_micro_second -= 10;
     count_down(that);
-  }, 2)
+  }, 10)
 }
 
 // 时间格式化输出，如03:25:19 86。每10ms都会调用一次

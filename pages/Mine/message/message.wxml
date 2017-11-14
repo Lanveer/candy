@@ -1,0 +1,12 @@
+
+<view style='border-top:1rpx solid #ddd; height:1rpx;'></view>
+<view class="item" wx:for='{{messageData}}'>
+    <view class='list'>
+        <!-- <view class='tips' wx:if='{{item.is_read==0}}'></view> -->
+        <text class='title'>{{item.label}}</text>
+        <text style='margin-left:20rpx;'>{{item.created_at}}</text>
+    </view>
+
+    <view class='detail'>{{item.content}}</view>
+
+</view>

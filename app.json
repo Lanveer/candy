@@ -24,6 +24,7 @@
     "pages/Mine/zhanweiUpload/zhanweiUpload",
     "pages/Mine/regist/regist",
     "pages/Mine/qualify/qualify",
+   "pages/Mine/message/message",
     "pages/Mine/productUpload/productUpload",
     "pages/Mine/zhanweiList/zhanweiList",
     "pages/Mine/zhanweiDetail/zhanweiDetail",

@@ -9,8 +9,8 @@ Page({
     codeFlag: true,
     isGetCodeEnable: false,
     timeleft: 60,
-    person:'',
-    enterprice:'',
+    person: '',
+    enterprice: '',
     userHeader: '',
     userNick: "",
     showInfo: false,
@@ -96,21 +96,24 @@ Page({
     wx.request({
       url: app.globalData.host + 'v2/wechat.user/info',
       method: 'GET',
-      data:{
+      data: {
         token: that.data.userInfo.token
       },
       success: function (res) {
+        console.log(res)
         if (res.data.code != 0) {
         } else {
           var identity = res.data.data.identity;
-          var validated=res.data.data.validated;
+          var validated = res.data.data.validated;
+          var booth= res.data.data.booth
           that.setData({
-            validated:validated
+            validated: validated,
+            booth: booth
           })
           if (identity == 1) {
             // 这里处理个人
             that.setData({
-              person:false
+              person: false
             })
           } else if (identity == 2) {
             // 这里处理企业
@@ -158,25 +161,109 @@ Page({
     })
   },
 
-  zhanweiupload:function(){
-    var that=this;
-    if(that.data.validated==0){
+//我的信息
+    headerClicked:function(){
+        wx.navigateTo({
+            url: '../info/info',
+            success: function(res) {},
+            fail: function(res) {},
+            complete: function(res) {},
+        })
+    },
+
+// 展位上传
+  zhanweiupload: function () {
+    var that = this;
+    if (that.data.validated == 0) {
       wx.showModal({
         title: '提示',
         content: '你还没有通过资质审核！',
         showCancel: false,
         success: function (res) {
           if (res.confirm) {
-            wx.navigateBack(1)
+            wx.navigateTo({
+              url: 'Mine/mine',
+            })
           }
         }
       })
-    }else{
+    } else {
       wx.navigateTo({
         url: '../zhanweiUpload/zhanweiUpload',
       })
     }
   },
+// 我的资质
+  myQualify: function () {
+    var that = this;
+    if (that.data.validated == 0) {
+      wx.showModal({
+        title: '提示',
+        content: '你还没有通过资质审核！',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: 'Mine/mine',
+            })
+          }
+        }
+      })
+    } else {
+      wx.navigateTo({
+        url: '../qualify/qualify',
+      })
+    }
+  },
+
+//资质上传
+  qualifyUpload:function(){
+    var that = this;
+    if (that.data.validated == 1) {
+      wx.showModal({
+        title: '提示',
+        content: '您已经通过资质审核了',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: 'Mine/mine',
+            })
+          }
+        }
+      })
+    } else {
+      wx.navigateTo({
+        url: '../qualifyUpload/qualifyUpload',
+      })
+    }
+  },
+
+
+
+  // 产品上传
+  productUpload:function(){
+    var that = this;
+    if (that.data.validated == 0 || that.data.booth.length ==0) {
+      wx.showModal({
+        title: '提示',
+        content: '你还没有展位！',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: 'Mine/mine',
+            })
+          }
+        }
+      })
+    } else {
+      wx.navigateTo({
+        url: '../productUpload/productUpload',
+      })
+    }
+  },
+
   // 处理身份
   // checkboxChange: function (e) {
   //   var that = this;
@@ -218,7 +305,12 @@ Page({
       tel: e.detail.value.tel,
       password: e.detail.value.password,
       opencode: that.data.codeInfo,
+      nick_name: app.globalData.nick_name,
+      header: app.globalData.header,
     }
+    wx.showLoading({
+      title: '登录中...',
+    })
     console.log(params)
     wx.request({
       url: app.globalData.host + 'v2/wechat.sign/inCell',
@@ -226,14 +318,17 @@ Page({
       header: { "Content-Type": "application/x-www-form-urlencoded" },
       data: params,
       success: function (res) {
-        console.log(res)
+        console.log(res);
+        wx.hideLoading();
         if (res.data.code != 0) {
           wx.showModal({
             title: '登录失败!',
             content: res.data.msg,
             showCancel: false,
             success: function (res) {
-              if (res.confirm) { }
+              if(res.confirm){
+                // 在这里处理失败
+              }
             }
           })
         } else {
@@ -243,7 +338,9 @@ Page({
             showCancel: false,
             success: function (res) {
               if (res.confirm) {
-                wx.navigateBack(1);
+                that.setData({
+                  needshowInfo: false
+                })
                 app.globalData.didFillinInfo = true;
                 wx.setStorage({
                   key: 'didFillinInfo',
@@ -257,7 +354,7 @@ Page({
       error: function (err) { }
     })
   },
-  
+
 
 
 })

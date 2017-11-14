@@ -15,6 +15,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     var user_id = wx.getStorageSync('userInfo').id;
+    var token = wx.getStorageSync('userInfo').token;
     var flag = options.flag;
     if (flag == 'huang') {
       // 这是逛展列表
@@ -51,8 +52,8 @@ Page({
         title: '收藏记录',
       })
       wx.request({
-        url: app.globalData.host + 'boothCollection',
-        data: { user_id: user_id },
+        url: app.globalData.host + 'v2/wechat.booth_collection/index',
+        data: { token:token},
         method: 'get',
         success: function (res) {
           console.log(res)
@@ -83,6 +84,19 @@ Page({
     }
   },
 
+
+  list_clicked: function (event) {
+    // 用户行为统计
+    var name = event.currentTarget.dataset.name;
+    app.userAct('展位', name)
+
+    wx.navigateTo({
+      url: '../exhibitionPos/exhibitionPos?itemId=' + event.currentTarget.dataset.index,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -14,9 +14,10 @@
    text-align: center;
 }
 .qualify{
-   width: 281rpx;height: 215rpx;
-   display: block;
-   margin: auto
+width:386rpx;
+height:223rpx;
+display:block;
+margin:20rpx auto;
 
 }
 

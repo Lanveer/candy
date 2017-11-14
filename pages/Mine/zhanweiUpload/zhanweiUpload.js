@@ -15,10 +15,14 @@ Page({
       { name: '0', value: '否', checked: 'true' },
     ],
     tags: [
-      { name: '0', value: '白酒', checked: 'true' },
-      { name: '1', value: '红酒' },
+      { name: '0', value: '白酒' },
+      { name: '1', value: '啤酒' },
       { name: '2', value: '洋酒' },
-      { name: '3', value: '啤酒' }
+      { name: '3', value: '红酒' },
+      { name: '4', value: '黄酒' },
+      { name: '5', value: '饮料' },
+      { name: '6', value: '食品' },
+      { name: '7', value: '其他' }
     ]
 
   },
@@ -86,7 +90,8 @@ Page({
       method: 'get',
       data: {
         field: 'name',
-        type: 1
+        type: 1,
+        is_limit:0
       },
       success: function (res) {
         if (res.data.code != 0) {
@@ -134,6 +139,9 @@ Page({
       sourceType: [type],
       success: function (res) {
         console.log(res);
+        wx.showLoading({
+          title: '上传中...',
+        })
         that.setData({
           cover: res.tempFilePaths[0],
         })
@@ -149,10 +157,22 @@ Page({
             'file': file
           },
           success: function (res) {
+            wx.hideLoading();
             var obj = JSON.parse(res.data);
             console.log(obj.data.url)
             that.setData({
               img: obj.data.url
+            })
+          },
+          fail: function () {
+            that.setData({
+              cover: '',
+            })
+            wx.hideLoading();
+            wx.showModal({
+              title: '提示',
+              content: '网络错误，请重新上传！',
+              showCancel: false
             })
           }
         })
@@ -215,6 +235,15 @@ Page({
       })
       return false;
     }
+
+    if (that.data.img == undefined) {
+      wx.showModal({
+        title: '提示',
+        content: '请上传一张封面图片',
+      })
+      return false;
+    }
+
     var params = {
       company: e.detail.value.company,
       introduce: e.detail.value.introduce,
@@ -230,8 +259,8 @@ Page({
       start_time: that.data.startTime == undefined ? '' : that.data.startTime,
       end_time: that.data.endTime
     }
-    console.log(params)
-    return false;
+    // console.log(params)
+    // return false;
     wx.request({
       url: app.globalData.host + 'v2/wechat.user/addbooth',
       method: 'post',
@@ -243,10 +272,16 @@ Page({
             title: res.data.msg,
           })
         } else {
-          wx.showToast({
-            title: '上传成功'
-          });
-          wx.navigateBack(1);
+          wx.showModal({
+            title: '提示',
+            content: '上传展位成功！',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                wx.navigateBack(1);
+              }
+            }
+          })
         }
       }
 
