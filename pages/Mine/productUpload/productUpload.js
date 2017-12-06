@@ -148,27 +148,27 @@ Page({
           },
       ];
       var y= JSON.stringify(x);
-
     var params = {
       goods_name: e.detail.value.goods_name,
       shop_price: e.detail.value.shop_price,
       market_price: e.detail.value.market_price,
       original_img: that.data.original_img,
       token: that.data.userInfo.token,
-      cat_id: that.data.cat_id,
+      cat_id: that.data.cat_id == undefined ? that.data.typeData[0].cat_id : that.data.cat_id,
       goods_type: that.data.goods_type == undefined ? that.data.typeData[0].goods_type : that.data.goods_type,
       //添加的
       goods_attrs: y,
       goods_content_mobile: '<img src=" ' + that.data.detail+' "/>'
     }
     console.log(params)
-    return false;
+    // return false;
     wx.request({
       url: app.globalData.host + 'v2/wechat.user/addproduct',
       method: 'post',
       header: { "Content-Type": "application/x-www-form-urlencoded" },
-      data: params,
+      data: params ,
       success: function (res) {
+        console.log(res)
         if (res.data.code != 0) {
           wx.showToast({
             title: res.data.msg,

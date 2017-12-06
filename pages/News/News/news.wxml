@@ -49,7 +49,7 @@
           <view class="normalNewsTitleView">
             <text class="normalNewsTitleFont">{{item.name}}</text>
             <view class="normalNewsIconView" wx:if="{{item.is_top==1}}">
-                <text class="zd">置顶</text> 
+              <text class="zd">置顶</text>
             </view>
           </view>
         </view>
@@ -88,10 +88,10 @@
       </view>
 
       <!--文本-->
-      <view wx:if="{{item.type == 1}}" class="normalNewsView" bindtap="normalNewsClicked" data-id="{{item.id}}" data-item-type="{{item.type}}">
-        <view class="normalNewsContainer">
-          <image class="normalNewsImage" src="{{item.covers[0]}}"></image>
-          <view class="normalNewsTitleView">
+      <view wx:if="{{item.type == 1}}" class="normalNewsView" bindtap="normalNewsClicked" data-id="{{item.id}}" data-item-type="{{item.type}}" style='height:auto;'>
+        <view class="normalNewsContainer" style='height: auto;padding: 8px 0 8px 0;'>
+          <!-- <image class="normalNewsImage" src="{{item.covers[0]}}"></image> -->
+          <view class="normalNewsTitleView" style='height:auto;width:auto;'>
             <text class="normalNewsTitleFont">{{item.name}}</text>
             <view class="normalNewsIconView">
               <text class="normalNewsIconFont">{{item.bottomTitle}}</text>
@@ -107,8 +107,8 @@
           <image class="normalNewsImage" src="{{item.covers[0]}}"></image>
           <view class="normalNewsTitleView">
             <text class="normalNewsTitleFont">{{item.name}}</text>
-              <view class="normalNewsIconView" wx:if="{{item.is_top==1}}">
-                <text class="zd">置顶</text> 
+            <view class="normalNewsIconView" wx:if="{{item.is_top==1}}">
+              <text class="zd">置顶</text>
             </view>
           </view>
         </view>

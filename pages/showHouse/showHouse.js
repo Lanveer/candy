@@ -192,6 +192,7 @@ Page({
     boothnum: '',
     distance: '',
     exhibitionType: '',
+    floors_alias:''
   },
 
   // 点击展馆
@@ -199,7 +200,7 @@ Page({
     var that = this;
     var index = event.currentTarget.dataset.index;
     var ids = event.currentTarget.dataset.id;
-    var name = event.currentTarget.dataset.name;
+    var name = that.data.floors_alias[index];
     var key = '';
     var condition = true;
     var obj = {};
@@ -324,7 +325,9 @@ Page({
           lng: res.data.data.lng,
           boothnum: res.data.data.booth_count,
           distance: res.data.data.distance,
-          floor: tempFloor
+          floor: tempFloor,
+          exhibitionTag:res.data.data.floors_alias[0],
+          floors_alias: res.data.data.floors_alias
         })
 
       },
@@ -520,6 +523,28 @@ Page({
 
   scroll: function (event) {
 
+  },
+
+  locationClicked: function (event) {
+      var that = this;
+      wx.openLocation({
+          latitude: parseFloat(that.data.lat), // 纬度，范围为-90~90，负数表示南纬
+          longitude: parseFloat(that.data.lng), // 经度，范围为-180~180，负数表示西经
+          scale: 28, // 缩放比例
+          name: that.data.name, // 位置名
+          address: that.data.address, // 地址的详细说明
+          success: function (res) {
+              // success
+              console.log("success...")
+          },
+          fail: function () {
+              // fail
+              console.log("fail...")
+          },
+          complete: function () {
+              // complete
+          }
+      })
   },
 
   // 提交信息
