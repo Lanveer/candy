@@ -4,23 +4,22 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
-		"minified": true,
-		"newFeature": true
+		"minified": true
 	},
-	"compileType": "miniprogram",
+	"compileType": "weapp",
 	"libVersion": "1.6.0",
 	"appid": "wxdeb2af8946db58ef",
 	"projectname": "candy",
 	"condition": {
+		"weapp": {
+			"current": -1,
+			"list": []
+		},
 		"search": {
 			"current": -1,
 			"list": []
 		},
 		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
 			"current": -1,
 			"list": []
 		}
